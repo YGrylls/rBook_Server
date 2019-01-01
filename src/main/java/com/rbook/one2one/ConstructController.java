@@ -11,12 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.rbook.common.IfSuccessResponse;
 
 @RestController
-public class One2OneController {
+public class ConstructController {
 
 	@PostMapping("/One2OneConstruct")
 	@ResponseBody
-	public IfSuccessResponse construct(@RequestBody One2OneConstructRequest req, HttpServletRequest request,
+	public IfSuccessResponse construct(@RequestBody ConstructRequest req, HttpServletRequest request,
 			HttpServletResponse response) {
+
 		return new IfSuccessResponse(-1, "Fail", null);
 
 	}

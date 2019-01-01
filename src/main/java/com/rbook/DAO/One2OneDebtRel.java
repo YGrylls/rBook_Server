@@ -26,6 +26,9 @@ public class One2OneDebtRel implements IDataRes {
 	@Property("date")
 	private LocalDate date;
 
+	@Property("status")
+	private int status;
+
 	@Property("desc")
 	private String desc;
 
@@ -68,7 +71,7 @@ public class One2OneDebtRel implements IDataRes {
 	public IEntity toEntity() {
 		// TODO Auto-generated method stub
 
-		return new One2OneDebt(number, date, desc, (User) start.toEntity(), (User) end.toEntity());
+		return new One2OneDebt(graphId, number, status, date, desc, (User) start.toEntity(), (User) end.toEntity());
 	}
 
 }
