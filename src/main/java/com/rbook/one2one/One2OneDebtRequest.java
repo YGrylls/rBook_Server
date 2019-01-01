@@ -1,6 +1,10 @@
 package com.rbook.one2one;
 
-public class One2OneDebtRequest { // add new pair debt
+import com.rbook.common.IUserReq;
+import com.rbook.common.UserHeader;
+
+public class One2OneDebtRequest implements IUserReq { // add new pair debt
+	private UserHeader uh;
 	private String counterName;
 	private int num;
 	private String desc;
@@ -42,6 +46,22 @@ public class One2OneDebtRequest { // add new pair debt
 	public String toString() {
 		return "One2OneDebtRequest [counterName=" + counterName + ", num=" + num + ", desc=" + desc + ", direct="
 				+ direct + "]";
+	}
+
+	public String getUsername() {
+		return uh.getUsername();
+	}
+
+	public String getPassword() {
+		return uh.getPassword();
+	}
+
+	public UserHeader getUh() {
+		return uh;
+	}
+
+	public void setUh(UserHeader uh) {
+		this.uh = uh;
 	}
 
 }

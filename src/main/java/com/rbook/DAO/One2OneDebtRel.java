@@ -9,9 +9,7 @@ import org.neo4j.ogm.annotation.Property;
 import org.neo4j.ogm.annotation.RelationshipEntity;
 import org.neo4j.ogm.annotation.StartNode;
 
-import com.rbook.entity.IEntity;
 import com.rbook.entity.One2OneDebt;
-import com.rbook.entity.User;
 
 @RelationshipEntity(type = "DEBT")
 public class One2OneDebtRel implements IDataRes {
@@ -68,10 +66,10 @@ public class One2OneDebtRel implements IDataRes {
 	}
 
 	@Override
-	public IEntity toEntity() {
+	public One2OneDebt toEntity() {
 		// TODO Auto-generated method stub
 
-		return new One2OneDebt(graphId, number, status, date, desc, (User) start.toEntity(), (User) end.toEntity());
+		return new One2OneDebt(graphId, number, status, date, desc, start.toEntity(), end.toEntity());
 	}
 
 }

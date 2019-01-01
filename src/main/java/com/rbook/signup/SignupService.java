@@ -19,10 +19,10 @@ public class SignupService {
 	}
 
 	@Transactional
-	public Boolean createNewUser(String username, String password, String identity) {
+	public Boolean createNewUser(String username, String password, String identity, String nickname) {
 		try {
 			String encodedPW = Encoder.encryptBasedDes(password);
-			userdao.addUser(username, encodedPW, identity, 0, 5);
+			userdao.addUser(username, encodedPW, identity, 0, 5, nickname);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;

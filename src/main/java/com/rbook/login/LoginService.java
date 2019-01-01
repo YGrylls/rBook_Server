@@ -27,7 +27,7 @@ public class LoginService {
 			}
 			if (!resList.isEmpty()) {
 				user = resList.get(0);
-				return (User) user.toEntity();
+				return user.toEntity();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

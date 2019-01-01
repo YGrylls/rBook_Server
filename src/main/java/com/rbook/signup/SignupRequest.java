@@ -6,10 +6,20 @@ public class SignupRequest {
 	private String username;
 	private String password;
 	private String identity;
+	private String nickname;
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
 
 	public boolean signInCheck() {
-		return null != username && null != password && username.length() <= 16 && password.length() <= 16
-				&& identity != null && identity.length() == 18 && IdentityNum.checkValidation(identity);
+		return null != username && null != password && nickname != null && username.length() <= 16
+				&& password.length() <= 16 && nickname.length() <= 16 && identity != null && identity.length() == 18
+				&& IdentityNum.checkValidation(identity);
 	}
 
 	public String getUsername() {
@@ -39,7 +49,8 @@ public class SignupRequest {
 
 	@Override
 	public String toString() {
-		return "LoginRequest [username=" + username + ", password=" + password + "]";
+		return "SignupRequest [username=" + username + ", password=" + password + ", identity=" + identity
+				+ ", nickname=" + nickname + "]";
 	}
 
 }

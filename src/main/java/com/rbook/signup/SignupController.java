@@ -27,10 +27,11 @@ public class SignupController {
 			String username = req.getUsername();
 			String password = req.getPassword();
 			String identity = req.getIdentity();
+			String nickname = req.getNickname();
 			if (signupService.ifExist(username, identity)) {
 				return new IfSuccessResponse(1, "User or Identity exists", null);
 			}
-			if (signupService.createNewUser(username, password, identity)) {
+			if (signupService.createNewUser(username, password, identity, nickname)) {
 
 				System.out.println("---------signup success---------");
 
