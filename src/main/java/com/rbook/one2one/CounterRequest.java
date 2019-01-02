@@ -40,4 +40,21 @@ public class CounterRequest implements IUserReq {
 		this.uh = uh;
 	}
 
+	public boolean checkValidate() {
+		boolean uhValidate = false;
+		boolean contentValidate = false;
+		try {
+			System.out.println("-------------------req-----------\n" + this + "\n");
+			if (uh != null) {
+				uhValidate = (getUsername().length() <= 16 && getPassword().length() <= 16);
+			}
+			contentValidate = counter.length() <= 16;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
+		return uhValidate && contentValidate;
+	}
+
 }

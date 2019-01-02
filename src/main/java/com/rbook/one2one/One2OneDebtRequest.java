@@ -8,7 +8,7 @@ public class One2OneDebtRequest implements IUserReq { // add new pair debt
 	private String counterName;
 	private int num;
 	private String desc;
-	private Boolean direct; // true if money out, false if money in
+	private boolean direct; // true if money out, false if money in
 
 	public String getCounterName() {
 		return counterName;
@@ -62,6 +62,24 @@ public class One2OneDebtRequest implements IUserReq { // add new pair debt
 
 	public void setUh(UserHeader uh) {
 		this.uh = uh;
+	}
+
+	public boolean checkValidate() {
+		boolean uhValidate = false;
+		boolean contentValidate = false;
+
+		try {
+			System.out.println("-------------------req-----------\n" + this + "\n");
+			if (uh != null) {
+				uhValidate = (getUsername().length() <= 16 && getPassword().length() <= 16);
+			}
+			contentValidate = counterName.length() <= 16 && desc.length() <= 140 && num <= 5000000 && num >= 0;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
+		return uhValidate && contentValidate;
 	}
 
 }

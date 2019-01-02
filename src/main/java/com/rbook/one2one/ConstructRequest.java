@@ -45,4 +45,22 @@ public class ConstructRequest implements IUserReq { // construct a new pair
 		this.uh = uh;
 	}
 
+	@Override
+	public boolean checkValidate() {
+		boolean uhValidate = false;
+		boolean contentValidate = false;
+		try {
+			System.out.println("-------------------req-----------\n" + this + "\n");
+			if (uh != null) {
+				uhValidate = (getUsername().length() <= 16 && getPassword().length() <= 16);
+			}
+			contentValidate = counterName.length() <= 16 && desc.length() <= 140;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
+		return uhValidate && contentValidate;
+	}
+
 }

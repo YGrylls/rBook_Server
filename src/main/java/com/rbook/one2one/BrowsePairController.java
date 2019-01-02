@@ -29,7 +29,9 @@ public class BrowsePairController {
 	@PostMapping("/browsePair")
 	public IfSuccessResponse browsePairDebt(@RequestBody CounterRequest req, HttpServletRequest request,
 			HttpServletResponse response) {
-		System.out.println("----------req----------\n" + req + "\n-----------");
+		if (!req.checkValidate()) {
+			return new IfSuccessResponse(-1, "Request invalid", null);
+		}
 		User user = loginService.loginCheck(req.getUsername(), req.getPassword());
 		if (user == null) {
 			return new IfSuccessResponse(5, "Auth Failed", null);

@@ -25,22 +25,18 @@ public class ConstructService {
 	public One2OneDebt constructPair(String username, String counterName, String desc) {
 
 		One2OneDebtRel debt = null;
-		try {
 
-			int check = userDAO.checkUser(counterName);
-			if (check == 0) {
-				return null;
-			}
-
-			List<One2OneDebtRel> debtList = one2OneDebtDAO.findDebts(username, counterName);
-			if (debtList.size() != 0) {
-				return null;
-			}
-			debt = one2OneDebtDAO.createDebt(username, counterName, 0, desc, LocalDate.now(), 1);
-
-		} catch (Exception e) {
-			e.printStackTrace();
+		int check = userDAO.checkUser(counterName);
+		if (check == 0) {
+			return null;
 		}
+
+		List<One2OneDebtRel> debtList = one2OneDebtDAO.findDebts(username, counterName);
+		if (debtList.size() != 0) {
+			return null;
+		}
+		debt = one2OneDebtDAO.createDebt(username, counterName, 0, desc, LocalDate.now(), 1, true);
+
 		if (debt != null) {
 			return debt.toEntity();
 

@@ -27,6 +27,9 @@ public class ConstructController {
 	@ResponseBody
 	public IfSuccessResponse construct(@RequestBody ConstructRequest req, HttpServletRequest request,
 			HttpServletResponse response) {
+		if (!req.checkValidate()) {
+			return new IfSuccessResponse(-1, "Request invalid", null);
+		}
 		User user = loginService.loginCheck(req.getUsername(), req.getPassword());
 		if (user == null) {
 			return new IfSuccessResponse(5, "Auth Failed", null);
@@ -34,8 +37,10 @@ public class ConstructController {
 		One2OneDebt debt = constructService.constructPair(req.getUsername(), req.getCounterName(), req.getDesc());
 		if (debt == null) {
 			return new IfSuccessResponse(1, "User not exists or you two already paired", null);
-		} else
+		} else {
+			System.out.println("------------ConstructPair---------\n" + debt);
 			return new IfSuccessResponse(0, "Success", debt);
+		}
 
 	}
 

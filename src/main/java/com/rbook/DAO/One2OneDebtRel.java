@@ -30,6 +30,9 @@ public class One2OneDebtRel implements IDataRes {
 	@Property("desc")
 	private String desc;
 
+	@Property("proposal")
+	private boolean proposal; // true for starter ,false for ender
+
 	@StartNode
 	private UserNode start;
 
@@ -62,14 +65,55 @@ public class One2OneDebtRel implements IDataRes {
 
 	@Override
 	public String toString() {
-		return "One2OneDebtRel [number=" + number + ", date=" + date + ", desc=" + desc + "]";
+		return "One2OneDebtRel [graphId=" + graphId + ", number=" + number + ", date=" + date + ", status=" + status
+				+ ", desc=" + desc + ", proposal=" + proposal + ", start=" + start + ", end=" + end + "]";
 	}
 
 	@Override
 	public One2OneDebt toEntity() {
 		// TODO Auto-generated method stub
 
-		return new One2OneDebt(graphId, number, status, date, desc, start.toEntity(), end.toEntity());
+		return new One2OneDebt(graphId, number, status, date, desc, start.toEntity(), end.toEntity(), proposal);
+	}
+
+	public long getGraphId() {
+		return graphId;
+	}
+
+	public void setGraphId(long graphId) {
+		this.graphId = graphId;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	public boolean isProposal() {
+		return proposal;
+	}
+
+	public void setProposal(boolean proposal) {
+		this.proposal = proposal;
+	}
+
+	public UserNode getStart() {
+		return start;
+	}
+
+	public void setStart(UserNode start) {
+		this.start = start;
+	}
+
+	public UserNode getEnd() {
+		return end;
+	}
+
+	public void setEnd(UserNode end) {
+		this.end = end;
 	}
 
 }

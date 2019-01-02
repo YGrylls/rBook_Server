@@ -29,33 +29,70 @@ public class One2OneDebtController {
 	@PostMapping("/addPairDebt")
 	public IfSuccessResponse addPairDebt(@RequestBody One2OneDebtRequest req, HttpServletRequest request,
 			HttpServletResponse response) {
-
-		return new IfSuccessResponse(-1, "Error", null);
+		if (!req.checkValidate()) {
+			return new IfSuccessResponse(-1, "Request invalid", null);
+		}
+		User user = loginService.loginCheck(req.getUsername(), req.getPassword());
+		if (user == null) {
+			return new IfSuccessResponse(5, "Auth Failed", null);
+		}
+		String username = req.getUsername();
+		String counter = req.getCounterName();
+		if (one2OneDebtService.ifCanAdd(username, counter)) {
+			One2OneDebt debt = one2OneDebtService.addNewDebt(username, counter, req.getNum(), req.getDesc(),
+					req.getDirect());
+			if (debt == null) {
+				return new IfSuccessResponse(2, "DB Error", null);
+			}
+			System.out.println("------------addPairDebt---------\n" + debt);
+			return new IfSuccessResponse(0, "Success", debt);
+		} else {
+			return new IfSuccessResponse(1, "Can not add debt, auth refused or limit reached", null);
+		}
 	}
 
 	@ResponseBody
 	@PostMapping("/deletePairDebt")
 	public IfSuccessResponse deletePairDebt(@RequestBody One2OneSelectRequest req, HttpServletRequest request,
 			HttpServletResponse response) {
-		System.out.println("-------------delete-------------\n" + req);
-
-		return new IfSuccessResponse(-1, "Error", null);
+		if (!req.checkValidate()) {
+			return new IfSuccessResponse(-1, "Request invalid", null);
+		}
+		User user = loginService.loginCheck(req.getUsername(), req.getPassword());
+		if (user == null) {
+			return new IfSuccessResponse(5, "Auth Failed", null);
+		}
+		String username = req.getUsername();
+		long[] list = req.getIdList();
+		List<One2OneDebt> res = one2OneDebtService.deleteDebt(username, req.getCounter(), list);
+		if (res != null) {
+			return new IfSuccessResponse(0, "Success", res);
+		}
+		return new IfSuccessResponse(2, "Error", null);
 	}
 
 	@ResponseBody
 	@PostMapping("/combinePairDebt")
 	public IfSuccessResponse combinePairDebt(@RequestBody One2OneSelectRequest req, HttpServletRequest request,
 			HttpServletResponse response) {
-		System.out.println("-------------combine-------------\n" + req);
+		if (!req.checkValidate()) {
+			return new IfSuccessResponse(-1, "Request invalid", null);
+		}
+		User user = loginService.loginCheck(req.getUsername(), req.getPassword());
+		if (user == null) {
+			return new IfSuccessResponse(5, "Auth Failed", null);
+		}
 
-		return new IfSuccessResponse(-1, "Error", null);
+		return new IfSuccessResponse(2, "Error", null);
 	}
 
 	@ResponseBody
 	@PostMapping("/browsePairDebt")
 	public IfSuccessResponse certainPairDebt(@RequestBody CounterRequest req, HttpServletRequest request,
 			HttpServletResponse response) {
-		System.out.println("----------req----------\n" + req + "\n-----------");
+		if (!req.checkValidate()) {
+			return new IfSuccessResponse(-1, "Request invalid", null);
+		}
 		User user = loginService.loginCheck(req.getUsername(), req.getPassword());
 		if (user == null) {
 			return new IfSuccessResponse(5, "Auth Failed", null);

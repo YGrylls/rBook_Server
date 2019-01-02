@@ -11,8 +11,10 @@ public class One2OneDebt implements IEntity {
 						// add
 	private User start;
 	private User end;
+	private boolean proposal; // true for starter, false for ender
 
-	public One2OneDebt(long id, int num, int status, LocalDate date, String desc, User start, User end) {
+	public One2OneDebt(long id, int num, int status, LocalDate date, String desc, User start, User end,
+			boolean proposal) {
 		this.id = id;
 		this.num = num;
 		this.status = status;
@@ -20,6 +22,14 @@ public class One2OneDebt implements IEntity {
 		this.desc = desc;
 		this.start = start;
 		this.end = end;
+	}
+
+	public boolean isProposal() {
+		return proposal;
+	}
+
+	public void setProposal(boolean proposal) {
+		this.proposal = proposal;
 	}
 
 	public long getId() {
@@ -81,7 +91,7 @@ public class One2OneDebt implements IEntity {
 	@Override
 	public String toString() {
 		return "One2OneDebt [id=" + id + ", num=" + num + ", date=" + date + ", desc=" + desc + ", status=" + status
-				+ ", start=" + start + ", end=" + end + "]";
+				+ ", start=" + start + ", end=" + end + ", proposal=" + proposal + "]";
 	}
 
 }

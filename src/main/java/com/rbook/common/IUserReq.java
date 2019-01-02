@@ -5,4 +5,6 @@ public interface IUserReq {
 
 	public String getPassword();
 
+	public boolean checkValidate();
+
 }
