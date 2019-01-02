@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.rbook.common.BrowseRequest;
 import com.rbook.common.IfSuccessResponse;
 import com.rbook.entity.Pair;
 import com.rbook.entity.User;
@@ -27,7 +28,7 @@ public class BrowsePairController {
 
 	@ResponseBody
 	@PostMapping("/browsePair")
-	public IfSuccessResponse browsePairDebt(@RequestBody CounterRequest req, HttpServletRequest request,
+	public IfSuccessResponse browsePairDebt(@RequestBody BrowseRequest req, HttpServletRequest request,
 			HttpServletResponse response) {
 		if (!req.checkValidate()) {
 			return new IfSuccessResponse(-1, "Request invalid", null);

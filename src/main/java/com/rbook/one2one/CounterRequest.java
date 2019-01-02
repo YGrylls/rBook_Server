@@ -3,6 +3,7 @@ package com.rbook.one2one;
 import com.rbook.common.IUserReq;
 import com.rbook.common.UserHeader;
 
+// for check detail debts to certain counter
 public class CounterRequest implements IUserReq {
 	private UserHeader uh;
 	private String counter;

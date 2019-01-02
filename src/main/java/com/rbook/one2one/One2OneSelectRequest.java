@@ -5,6 +5,7 @@ import java.util.Arrays;
 import com.rbook.common.IUserReq;
 import com.rbook.common.UserHeader;
 
+// for combine and delete request
 public class One2OneSelectRequest implements IUserReq { // for delete and combine operation use
 	private UserHeader uh;
 	private String counter;
