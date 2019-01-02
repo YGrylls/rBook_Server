@@ -9,11 +9,11 @@ public class One2OneDebt implements IEntity {
 	private String desc;
 	private int status; // 0-normal , 1-wait to add, 2-wait to delete, 3-combine to delete, 4-combine to
 						// add
-	private User start;
-	private User end;
+	private String start;
+	private String end;
 	private boolean proposal; // true for starter, false for ender
 
-	public One2OneDebt(long id, int num, int status, LocalDate date, String desc, User start, User end,
+	public One2OneDebt(long id, int num, int status, LocalDate date, String desc, String start, String end,
 			boolean proposal) {
 		this.id = id;
 		this.num = num;
@@ -72,19 +72,19 @@ public class One2OneDebt implements IEntity {
 		this.status = status;
 	}
 
-	public User getStart() {
+	public String getStart() {
 		return start;
 	}
 
-	public void setStart(User start) {
+	public void setStart(String start) {
 		this.start = start;
 	}
 
-	public User getEnd() {
+	public String getEnd() {
 		return end;
 	}
 
-	public void setEnd(User end) {
+	public void setEnd(String end) {
 		this.end = end;
 	}
 

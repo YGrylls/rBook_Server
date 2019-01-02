@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.rbook.DAO.One2OneDebtDAO;
 import com.rbook.DAO.One2OneDebtRel;
-import com.rbook.entity.One2OneDebt;
 import com.rbook.entity.Pair;
 import com.rbook.entity.User;
 
@@ -26,7 +25,7 @@ public class BrowsePairService {
 
 			map = new HashMap<String, Pair>();
 			for (One2OneDebtRel o : resList) {
-				One2OneDebt debt = o.toEntity();
+				One2OneDebtRel debt = o;
 				User counter = null;
 				boolean out = true;
 				boolean unread = false;
@@ -34,15 +33,15 @@ public class BrowsePairService {
 					unread = true;
 				}
 				if (debt.getStart().getUsername().equals(username)) {
-					counter = debt.getEnd();
+					counter = debt.getEnd().toEntity();
 				} else {
-					counter = debt.getStart();
+					counter = debt.getStart().toEntity();
 					out = false;
 				}
 				if (map.containsKey(counter.getUsername())) {
-					map.get(counter.getUsername()).update(debt.getNum(), out, debt.getDate(), unread);
+					map.get(counter.getUsername()).update(debt.getNumber(), out, debt.getDate(), unread);
 				} else {
-					map.put(counter.getUsername(), new Pair(counter.getUsername(), debt.getNum(), unread,
+					map.put(counter.getUsername(), new Pair(counter.getUsername(), debt.getNumber(), unread,
 							debt.getDate(), counter.getNickname()));
 				}
 			}

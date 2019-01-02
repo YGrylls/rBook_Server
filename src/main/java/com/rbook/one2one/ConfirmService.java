@@ -16,17 +16,21 @@ public class ConfirmService {
 	@Transactional
 	public One2OneDebt accept(String username, String countername, long id, int status) {
 		One2OneDebt res = null;
-		long[] idList = { id };
-		int check = debtDao.checkStatus(username, countername, idList, status);
-		if (check != 0)
+		One2OneDebt debt = debtDao.getDebt(id).toEntity();
+		if (!(debt.getStart().equals(username) && debt.getEnd().equals(countername)
+				|| debt.getStart().equals(countername) && debt.getEnd().equals(username))) {
 			return null;
+		} else if (debt.getStart().equals(username) == debt.isProposal()) {
+			return null;
+		}
+
 		switch (status) {
 		case 1: {
 			res = debtDao.setStatus(id, 0).toEntity();
 		}
 		case 2: {
 			debtDao.deleteDebt(id);
-			res = new One2OneDebt(id, -1, -1, null, null, null, null, false);
+			res = debt;
 		}
 		case 4: {
 			res = debtDao.setStatus(id, 0).toEntity();
@@ -42,15 +46,18 @@ public class ConfirmService {
 	@Transactional
 	public One2OneDebt refuse(String username, String countername, long id, int status) {
 		One2OneDebt res = null;
-		long[] idList = { id };
-		int check = debtDao.checkStatus(username, countername, idList, status);
-		if (check != 0)
+		One2OneDebt debt = debtDao.getDebt(id).toEntity();
+		if (!(debt.getStart().equals(username) && debt.getEnd().equals(countername)
+				|| debt.getStart().equals(countername) && debt.getEnd().equals(username))) {
 			return null;
+		} else if (debt.getStart().equals(username) == debt.isProposal()) {
+			return null;
+		}
 
 		switch (status) {
 		case 1: {
 			debtDao.deleteDebt(id);
-			res = new One2OneDebt(id, -1, -1, null, null, null, null, false);
+			res = debt;
 		}
 		case 2: {
 			res = debtDao.setStatus(id, 0).toEntity();
@@ -58,7 +65,7 @@ public class ConfirmService {
 		case 4: {
 			debtDao.deleteDebt(id);
 			debtDao.confirmCombineCancel(username, countername);
-			res = new One2OneDebt(id, -1, -1, null, null, null, null, false);
+			res = debt;
 		}
 		default: {
 			res = null;

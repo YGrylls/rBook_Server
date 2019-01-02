@@ -41,7 +41,7 @@ public class ConfirmController {
 		if (res != null) {
 			return new IfSuccessResponse(0, "Success", res);
 		}
-		return new IfSuccessResponse(2, "Error", null);
+		return new IfSuccessResponse(2, "Error, request refused", null);
 	}
 
 	@ResponseBody
@@ -59,7 +59,7 @@ public class ConfirmController {
 		if (res != null) {
 			return new IfSuccessResponse(0, "Success", res);
 		}
-		return new IfSuccessResponse(2, "Error", null);
+		return new IfSuccessResponse(2, "Error, request refused", null);
 	}
 
 }

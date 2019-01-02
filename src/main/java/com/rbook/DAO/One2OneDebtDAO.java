@@ -46,6 +46,9 @@ public interface One2OneDebtDAO extends Neo4jRepository<One2OneDebtRel, Long> {
 	@Query("MATCH [r: ONE2ONE_DEBT] WHERE id(r)={0} SET r.status={1} RETURN r")
 	public One2OneDebtRel setStatus(long id, int status);
 
+	@Query("MATCH [r:ONE2ONE_DEBT] WHERE id(r)={0} RETURN r")
+	public One2OneDebtRel getDebt(long id);
+
 	@Query("MATCH [r: ONE2ONE_DEBT] WHERE id(r)={0} DELETE r")
 	public void deleteDebt(long id);
 }

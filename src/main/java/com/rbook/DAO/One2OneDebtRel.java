@@ -73,7 +73,7 @@ public class One2OneDebtRel implements IDataRes {
 	public One2OneDebt toEntity() {
 		// TODO Auto-generated method stub
 
-		return new One2OneDebt(graphId, number, status, date, desc, start.toEntity(), end.toEntity(), proposal);
+		return new One2OneDebt(graphId, number, status, date, desc, start.getUsername(), end.getUsername(), proposal);
 	}
 
 	public long getGraphId() {
