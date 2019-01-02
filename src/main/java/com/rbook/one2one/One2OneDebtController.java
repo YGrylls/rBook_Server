@@ -36,11 +36,9 @@ public class One2OneDebtController {
 		if (user == null) {
 			return new IfSuccessResponse(5, "Auth Failed", null);
 		}
-		String username = req.getUsername();
-		String counter = req.getCounterName();
-		if (one2OneDebtService.ifCanAdd(username, counter)) {
-			One2OneDebt debt = one2OneDebtService.addNewDebt(username, counter, req.getNum(), req.getDesc(),
-					req.getDirect());
+		if (one2OneDebtService.ifCanAdd(user.getUsername(), req.getCounterName())) {
+			One2OneDebt debt = one2OneDebtService.addNewDebt(user.getUsername(), req.getCounterName(), req.getNum(),
+					req.getDesc(), req.getDirect());
 			if (debt == null) {
 				return new IfSuccessResponse(2, "DB Error", null);
 			}
@@ -62,9 +60,9 @@ public class One2OneDebtController {
 		if (user == null) {
 			return new IfSuccessResponse(5, "Auth Failed", null);
 		}
-		String username = req.getUsername();
+
 		long[] list = req.getIdList();
-		List<One2OneDebt> res = one2OneDebtService.deleteDebt(username, req.getCounter(), list);
+		List<One2OneDebt> res = one2OneDebtService.deleteDebt(user.getUsername(), req.getCounter(), list);
 		if (res != null) {
 			return new IfSuccessResponse(0, "Success", res);
 		}
@@ -82,7 +80,15 @@ public class One2OneDebtController {
 		if (user == null) {
 			return new IfSuccessResponse(5, "Auth Failed", null);
 		}
+		if (!one2OneDebtService.canCombine(user.getUsername(), req.getCounter())) {
+			return new IfSuccessResponse(1, "Can not request combine, other request already exists", null);
+		}
+		One2OneDebt debt = one2OneDebtService.combineDebt(user.getUsername(), req.getCounter(), req.getIdList(),
+				req.getDesc());
 
+		if (debt != null) {
+			return new IfSuccessResponse(0, "Success", debt);
+		}
 		return new IfSuccessResponse(2, "Error", null);
 	}
 

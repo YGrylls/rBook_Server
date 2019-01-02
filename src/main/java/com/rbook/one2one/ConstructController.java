@@ -34,7 +34,7 @@ public class ConstructController {
 		if (user == null) {
 			return new IfSuccessResponse(5, "Auth Failed", null);
 		}
-		One2OneDebt debt = constructService.constructPair(req.getUsername(), req.getCounterName(), req.getDesc());
+		One2OneDebt debt = constructService.constructPair(user.getUsername(), req.getCounterName(), req.getDesc());
 		if (debt == null) {
 			return new IfSuccessResponse(1, "User not exists or you two already paired", null);
 		} else {

@@ -46,8 +46,32 @@ public class UserNode implements IDataRes {
 
 	}
 
+	public long getGraphId() {
+		return graphId;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
 	public String getPassword() {
 		return password;
+	}
+
+	public String getID() {
+		return ID;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public int getTotalAccount() {
+		return totalAccount;
+	}
+
+	public int getRankStatus() {
+		return rankStatus;
 	}
 
 }

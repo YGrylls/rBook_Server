@@ -72,10 +72,11 @@ public class One2OneDebtService {
 
 		ArrayList<One2OneDebt> res = null;
 
-		if (one2OneDebtDAO.ifCanChange(username, counter, list, 0) != list.length)
+		if (one2OneDebtDAO.checkStatus(username, counter, list, 0) != list.length)
 			return null;
 		List<One2OneDebtRel> tempStart = one2OneDebtDAO.setStateStart(username, list, 2, true);
 		List<One2OneDebtRel> tempEnd = one2OneDebtDAO.setStateEnd(username, list, 2, false);
+		assert (tempStart.size() + tempEnd.size() == list.length);
 		res = new ArrayList<One2OneDebt>();
 		for (One2OneDebtRel o : tempStart) {
 			res.add(o.toEntity());
@@ -87,6 +88,43 @@ public class One2OneDebtService {
 		return res;
 	}
 
-//	public One2OneDebt combineDebt(String username, )
+	public boolean canCombine(String username, String counter) {
+		int check = one2OneDebtDAO.checkCombine(username, counter);
+
+		return check != 0;
+	}
+
+	@Transactional
+	public One2OneDebt combineDebt(String username, String counter, long[] list, String desc) {
+
+		One2OneDebt debt = null;
+		String startname = username;
+		String endname = counter;
+		boolean proposal = true;
+		if (one2OneDebtDAO.checkStatus(username, counter, list, 0) != list.length)
+			return null;
+		List<One2OneDebtRel> tempStart = one2OneDebtDAO.setStateStart(username, list, 3, true);
+		List<One2OneDebtRel> tempEnd = one2OneDebtDAO.setStateEnd(username, list, 3, false);
+		assert (tempStart.size() + tempEnd.size() == list.length);
+		int total = 0;
+		for (One2OneDebtRel o : tempStart) {
+
+			total = total + o.getNumber();
+
+		}
+		for (One2OneDebtRel o : tempEnd) {
+
+			total = total - o.getNumber();
+
+		}
+		if (total < 0) {
+			startname = counter;
+			endname = username;
+			total = 0 - total;
+			proposal = false;
+		}
+		debt = one2OneDebtDAO.createDebt(startname, endname, total, desc, LocalDate.now(), 4, proposal).toEntity();
+		return debt;
+	}
 
 }
