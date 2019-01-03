@@ -21,6 +21,9 @@ public class One2OneDebtRel implements IDataRes {
 	@GeneratedValue
 	private long graphId;
 
+	@Property("uuid")
+	private String uuid;
+
 	@Property("number")
 	private int number;
 
@@ -68,15 +71,24 @@ public class One2OneDebtRel implements IDataRes {
 
 	@Override
 	public String toString() {
-		return "One2OneDebtRel [graphId=" + graphId + ", number=" + number + ", date=" + date + ", status=" + status
-				+ ", desc=" + desc + ", proposal=" + proposal + ", start=" + start + ", end=" + end + "]";
+		return "One2OneDebtRel [graphId=" + graphId + ", uuid=" + uuid + ", number=" + number + ", date=" + date
+				+ ", status=" + status + ", desc=" + desc + ", proposal=" + proposal + ", start=" + start + ", end="
+				+ end + "]";
 	}
 
 	@Override
 	public One2OneDebt toEntity() {
 		// TODO Auto-generated method stub
 
-		return new One2OneDebt(graphId, number, status, date, desc, start.getUsername(), end.getUsername(), proposal);
+		return new One2OneDebt(uuid, number, status, date, desc, start.getUsername(), end.getUsername(), proposal);
+	}
+
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
 	}
 
 	public long getGraphId() {

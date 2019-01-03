@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.rbook.common.BrowseRequest;
 import com.rbook.common.IfSuccessResponse;
-import com.rbook.entity.Pair;
 import com.rbook.entity.User;
 import com.rbook.login.LoginService;
+import com.rbook.model.Pair;
 
 @RestController
 public class BrowsePairController {

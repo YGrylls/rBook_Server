@@ -61,7 +61,7 @@ public class One2OneDebtController {
 			return new IfSuccessResponse(5, "Auth Failed", null);
 		}
 
-		long[] list = req.getIdList();
+		String[] list = req.getIdList();
 		List<One2OneDebt> res = one2OneDebtService.deleteDebt(user.getUsername(), req.getCounter(), list);
 		if (res != null) {
 			return new IfSuccessResponse(0, "Success", res);

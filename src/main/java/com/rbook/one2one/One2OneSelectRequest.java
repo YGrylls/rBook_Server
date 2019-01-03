@@ -14,24 +14,24 @@ public class One2OneSelectRequest implements IUserReq { // for delete and combin
 		return counter;
 	}
 
-	public void setCounter(String counter) {
-		this.counter = counter;
+	public void setIdList(String[] idList) {
+		this.idList = idList;
 	}
 
-	public void setIdList(long[] idList) {
-		this.idList = idList;
+	public String[] getIdList() {
+		return idList;
+	}
+
+	public void setCounter(String counter) {
+		this.counter = counter;
 	}
 
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
 
-	private long[] idList;
+	private String[] idList;
 	private String desc;
-
-	public long[] getIdList() {
-		return idList;
-	}
 
 	public String getDesc() {
 		return desc;

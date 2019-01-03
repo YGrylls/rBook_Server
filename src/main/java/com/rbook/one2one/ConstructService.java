@@ -11,6 +11,7 @@ import com.rbook.DAO.One2OneDebtDAO;
 import com.rbook.DAO.One2OneDebtRel;
 import com.rbook.DAO.UserDAO;
 import com.rbook.entity.One2OneDebt;
+import com.rbook.util.UID;
 
 @Service
 public class ConstructService {
@@ -36,7 +37,8 @@ public class ConstructService {
 		if (debtList.size() != 0) {
 			return null;
 		}
-		debt = one2OneDebtDAO.createDebt(username, counterName, 0, desc, LocalDate.now().toString(), 1, true);
+		debt = one2OneDebtDAO.createDebt(username, counterName, 0, desc, LocalDate.now().toString(), 1, true,
+				UID.generate());
 		System.out.println("----------NewDebt-----\n" + debt + "\n-------");
 		if (debt != null) {
 			return debt.toEntity();

@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.rbook.DAO.One2OneDebtDAO;
 import com.rbook.DAO.One2OneDebtRel;
 import com.rbook.entity.One2OneDebt;
+import com.rbook.util.UID;
 
 @Service
 public class One2OneDebtService {
@@ -63,13 +64,13 @@ public class One2OneDebtService {
 			proposal = false;
 		}
 		One2OneDebtRel rel = one2OneDebtDAO.createDebt(starter, ender, num, desc, LocalDate.now().toString(), 1,
-				proposal);
+				proposal, UID.generate());
 		debt = rel.toEntity();
 		return debt;
 	}
 
 	@Transactional
-	public List<One2OneDebt> deleteDebt(String username, String counter, long[] list) {
+	public List<One2OneDebt> deleteDebt(String username, String counter, String[] list) {
 
 		ArrayList<One2OneDebt> res = null;
 
@@ -96,7 +97,7 @@ public class One2OneDebtService {
 	}
 
 	@Transactional
-	public One2OneDebt combineDebt(String username, String counter, long[] list, String desc) {
+	public One2OneDebt combineDebt(String username, String counter, String[] list, String desc) {
 
 		One2OneDebt debt = null;
 		String startname = username;
@@ -124,7 +125,8 @@ public class One2OneDebtService {
 			total = 0 - total;
 			proposal = false;
 		}
-		debt = one2OneDebtDAO.createDebt(startname, endname, total, desc, LocalDate.now().toString(), 4, proposal)
+		debt = one2OneDebtDAO
+				.createDebt(startname, endname, total, desc, LocalDate.now().toString(), 4, proposal, UID.generate())
 				.toEntity();
 		return debt;
 	}

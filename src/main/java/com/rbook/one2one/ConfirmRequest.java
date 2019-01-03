@@ -5,7 +5,7 @@ import com.rbook.common.UserHeader;
 
 public class ConfirmRequest implements IUserReq {
 	private UserHeader uh;
-	private long id;
+	private String id;
 	private String counter;
 	private int status;
 
@@ -25,11 +25,11 @@ public class ConfirmRequest implements IUserReq {
 		this.uh = uh;
 	}
 
-	public long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

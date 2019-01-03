@@ -1,8 +1,8 @@
-package com.rbook.entity;
+package com.rbook.model;
 
 import java.time.LocalDate;
 
-public class Pair implements IEntity {
+public class Pair {
 
 	private String name;
 	private int totalNum;

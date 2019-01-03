@@ -3,7 +3,7 @@ package com.rbook.entity;
 import java.time.LocalDate;
 
 public class One2OneDebt implements IEntity {
-	private long id;
+	private String uuid;
 	private int num;
 	private LocalDate date;
 	private String desc;
@@ -13,9 +13,9 @@ public class One2OneDebt implements IEntity {
 	private String end;
 	private boolean proposal; // true for starter, false for ender
 
-	public One2OneDebt(long id, int num, int status, LocalDate date, String desc, String start, String end,
+	public One2OneDebt(String uuid, int num, int status, LocalDate date, String desc, String start, String end,
 			boolean proposal) {
-		this.id = id;
+		this.uuid = uuid;
 		this.num = num;
 		this.status = status;
 		this.date = date;
@@ -33,12 +33,12 @@ public class One2OneDebt implements IEntity {
 		this.proposal = proposal;
 	}
 
-	public long getId() {
-		return id;
+	public String getUuid() {
+		return uuid;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setUuid(String id) {
+		this.uuid = id;
 	}
 
 	public int getNum() {
@@ -91,7 +91,7 @@ public class One2OneDebt implements IEntity {
 
 	@Override
 	public String toString() {
-		return "One2OneDebt [id=" + id + ", num=" + num + ", date=" + date + ", desc=" + desc + ", status=" + status
+		return "One2OneDebt [uuid=" + uuid + ", num=" + num + ", date=" + date + ", desc=" + desc + ", status=" + status
 				+ ", start=" + start + ", end=" + end + ", proposal=" + proposal + "]";
 	}
 

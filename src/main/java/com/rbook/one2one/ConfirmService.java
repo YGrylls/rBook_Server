@@ -14,7 +14,7 @@ public class ConfirmService {
 	private One2OneDebtDAO debtDao;
 
 	@Transactional
-	public One2OneDebt accept(String username, String countername, long id, int status) {
+	public One2OneDebt accept(String username, String countername, String id, int status) {
 		One2OneDebt res = null;
 		One2OneDebt debt = debtDao.getDebt(id).toEntity();
 		System.out.println("--------debt\n" + debt + "\n--------");
@@ -48,7 +48,7 @@ public class ConfirmService {
 	}
 
 	@Transactional
-	public One2OneDebt refuse(String username, String countername, long id, int status) {
+	public One2OneDebt refuse(String username, String countername, String id, int status) {
 		One2OneDebt res = null;
 		One2OneDebt debt = debtDao.getDebt(id).toEntity();
 		if (!(debt.getStart().equals(username) && debt.getEnd().equals(countername)
