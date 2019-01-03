@@ -9,6 +9,8 @@ import com.rbook.common.UserHeader;
 public class One2OneSelectRequest implements IUserReq { // for delete and combine operation use
 	private UserHeader uh;
 	private String counter;
+	private String[] idList;
+	private String desc;
 
 	public String getCounter() {
 		return counter;
@@ -29,9 +31,6 @@ public class One2OneSelectRequest implements IUserReq { // for delete and combin
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
-
-	private String[] idList;
-	private String desc;
 
 	public String getDesc() {
 		return desc;
