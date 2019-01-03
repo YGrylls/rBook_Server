@@ -62,7 +62,8 @@ public class One2OneDebtService {
 			ender = username;
 			proposal = false;
 		}
-		One2OneDebtRel rel = one2OneDebtDAO.createDebt(starter, ender, num, desc, LocalDate.now(), 1, proposal);
+		One2OneDebtRel rel = one2OneDebtDAO.createDebt(starter, ender, num, desc, LocalDate.now().toString(), 1,
+				proposal);
 		debt = rel.toEntity();
 		return debt;
 	}
@@ -91,7 +92,7 @@ public class One2OneDebtService {
 	public boolean canCombine(String username, String counter) {
 		int check = one2OneDebtDAO.checkCombine(username, counter);
 
-		return check != 0;
+		return check == 0;
 	}
 
 	@Transactional
@@ -123,7 +124,8 @@ public class One2OneDebtService {
 			total = 0 - total;
 			proposal = false;
 		}
-		debt = one2OneDebtDAO.createDebt(startname, endname, total, desc, LocalDate.now(), 4, proposal).toEntity();
+		debt = one2OneDebtDAO.createDebt(startname, endname, total, desc, LocalDate.now().toString(), 4, proposal)
+				.toEntity();
 		return debt;
 	}
 

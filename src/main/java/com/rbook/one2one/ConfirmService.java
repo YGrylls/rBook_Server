@@ -17,6 +17,7 @@ public class ConfirmService {
 	public One2OneDebt accept(String username, String countername, long id, int status) {
 		One2OneDebt res = null;
 		One2OneDebt debt = debtDao.getDebt(id).toEntity();
+		System.out.println("--------debt\n" + debt + "\n--------");
 		if (!(debt.getStart().equals(username) && debt.getEnd().equals(countername)
 				|| debt.getStart().equals(countername) && debt.getEnd().equals(username))) {
 			return null;
@@ -27,14 +28,17 @@ public class ConfirmService {
 		switch (status) {
 		case 1: {
 			res = debtDao.setStatus(id, 0).toEntity();
+			break;
 		}
 		case 2: {
 			debtDao.deleteDebt(id);
 			res = debt;
+			break;
 		}
 		case 4: {
 			res = debtDao.setStatus(id, 0).toEntity();
 			debtDao.confirmCombineDelete(username, countername);
+			break;
 		}
 		default: {
 			res = null;
@@ -58,14 +62,17 @@ public class ConfirmService {
 		case 1: {
 			debtDao.deleteDebt(id);
 			res = debt;
+			break;
 		}
 		case 2: {
 			res = debtDao.setStatus(id, 0).toEntity();
+			break;
 		}
 		case 4: {
 			debtDao.deleteDebt(id);
 			debtDao.confirmCombineCancel(username, countername);
 			res = debt;
+			break;
 		}
 		default: {
 			res = null;

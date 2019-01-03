@@ -11,8 +11,11 @@ import org.neo4j.ogm.annotation.StartNode;
 
 import com.rbook.entity.One2OneDebt;
 
-@RelationshipEntity(type = "DEBT")
+@RelationshipEntity(type = "ONE2ONE_DEBT")
 public class One2OneDebtRel implements IDataRes {
+
+	public One2OneDebtRel() {
+	}
 
 	@Id
 	@GeneratedValue

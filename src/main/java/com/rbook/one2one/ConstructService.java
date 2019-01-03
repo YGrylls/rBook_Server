@@ -32,11 +32,12 @@ public class ConstructService {
 		}
 
 		List<One2OneDebtRel> debtList = one2OneDebtDAO.findDebts(username, counterName);
+		System.out.println("----------debtList-----\n" + debtList + "\n-------");
 		if (debtList.size() != 0) {
 			return null;
 		}
-		debt = one2OneDebtDAO.createDebt(username, counterName, 0, desc, LocalDate.now(), 1, true);
-
+		debt = one2OneDebtDAO.createDebt(username, counterName, 0, desc, LocalDate.now().toString(), 1, true);
+		System.out.println("----------NewDebt-----\n" + debt + "\n-------");
 		if (debt != null) {
 			return debt.toEntity();
 

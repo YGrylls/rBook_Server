@@ -22,13 +22,14 @@ public class BrowsePairService {
 		HashMap<String, Pair> map = null;
 		try {
 			List<One2OneDebtRel> resList = one2OneDAO.findAllDebts(username);
-
+			System.out.println("-------list---\n" + resList + "\n----------");
 			map = new HashMap<String, Pair>();
 			for (One2OneDebtRel o : resList) {
 				One2OneDebtRel debt = o;
 				User counter = null;
 				boolean out = true;
 				boolean unread = false;
+				int x = 1;
 				if (debt.getStatus() != 0) {
 					unread = true;
 				}
@@ -39,9 +40,16 @@ public class BrowsePairService {
 					out = false;
 				}
 				if (map.containsKey(counter.getUsername())) {
-					map.get(counter.getUsername()).update(debt.getNumber(), out, debt.getDate(), unread);
+					System.out.println("-------map update---\n");
+					if (unread)
+						x = 0;
+					map.get(counter.getUsername()).update(debt.getNumber() * x, out, debt.getDate(), unread);
 				} else {
-					map.put(counter.getUsername(), new Pair(counter.getUsername(), debt.getNumber(), unread,
+					if (unread)
+						x = 0;
+					if (!out)
+						x = -x;
+					map.put(counter.getUsername(), new Pair(counter.getUsername(), debt.getNumber() * x, unread,
 							debt.getDate(), counter.getNickname()));
 				}
 			}

@@ -15,6 +15,7 @@ public class SignupService {
 
 	public Boolean ifExist(String name, String identity) {
 		int res = userdao.checkExistList(name, identity);
+		System.out.println("-----isExistRes----\n" + res + "\n-------");
 		return (res != 0);
 	}
 

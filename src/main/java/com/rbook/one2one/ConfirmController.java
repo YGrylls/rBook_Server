@@ -21,9 +21,6 @@ public class ConfirmController {
 	private LoginService loginService;
 
 	@Autowired
-	private One2OneDebtService one2OneDebtService;
-
-	@Autowired
 	private ConfirmService confirmService;
 
 	@ResponseBody

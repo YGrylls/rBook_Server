@@ -22,6 +22,7 @@ public class One2OneDebt implements IEntity {
 		this.desc = desc;
 		this.start = start;
 		this.end = end;
+		this.proposal = proposal;
 	}
 
 	public boolean isProposal() {
