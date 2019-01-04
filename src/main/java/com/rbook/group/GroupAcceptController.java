@@ -33,7 +33,7 @@ public class GroupAcceptController {
 		if (user == null) {
 			return new IfSuccessResponse(5, "Auth Failed", null);
 		}
-		// confirm group
+		// confirm a res
 		return null;
 	}
 

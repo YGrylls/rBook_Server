@@ -61,8 +61,30 @@ public class GroupDebtService {
 	}
 
 	@Transactional
-	public boolean deleteGroupDebt(String username, String[] deleteList) {
-		return false;
+	public boolean deleteGroupDebt(String username, String guid, String[] deleteList) {
+		if (!canDelete(username, guid, deleteList)) {
+			return false;
+		}
+		groupDebtDAO.deleteGroupDebt(deleteList);
+		return true;
+
+	}
+
+	public boolean canDelete(String username, String uuid, String[] targetList) {
+		try {
+			int personal = groupDebtDAO.checkPersonalStatus(username, uuid);
+			if (personal != 1)
+				return false;
+			int target = groupDebtDAO.checkDeleteTarget(username, targetList, uuid);
+			if (target != targetList.length)
+				return false;
+			return true;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
 	}
 
 }

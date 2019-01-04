@@ -59,8 +59,15 @@ public class GroupDebtController {
 			return new IfSuccessResponse(5, "Auth Failed", null);
 		}
 		// delete a group debt
-		return null;
+		boolean res = groupDebtService.deleteGroupDebt(user.getUsername(), req.getUuid(), req.getList());
+		if (res) {
+			return new IfSuccessResponse(0, "Success", res);
+		} else {
+			return new IfSuccessResponse(1, "Delete Failed, check your request and target debts", null);
+		}
 	}
+
+	// todo:
 
 	@ResponseBody
 	@PostMapping("/browseDebtMember")
@@ -73,7 +80,8 @@ public class GroupDebtController {
 		if (user == null) {
 			return new IfSuccessResponse(5, "Auth Failed", null);
 		}
-		// delete a group debt
+
+		// browse member
 		return null;
 	}
 
@@ -88,7 +96,8 @@ public class GroupDebtController {
 		if (user == null) {
 			return new IfSuccessResponse(5, "Auth Failed", null);
 		}
-		// create group
+		// browse groupdebt
+
 		return null;
 	}
 }
