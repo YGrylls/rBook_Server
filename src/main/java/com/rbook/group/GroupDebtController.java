@@ -51,4 +51,19 @@ public class GroupDebtController {
 		// delete a group debt
 		return null;
 	}
+
+	@ResponseBody
+	@PostMapping("/browseDebtMember")
+	public IfSuccessResponse browseDebtMember(@RequestBody GroupRequest req, HttpServletRequest request,
+			HttpServletResponse response) {
+		if (!req.checkValidate()) {
+			return new IfSuccessResponse(-1, "Request invalid", null);
+		}
+		User user = loginService.loginCheck(req.getUsername(), req.getPassword());
+		if (user == null) {
+			return new IfSuccessResponse(5, "Auth Failed", null);
+		}
+		// delete a group debt
+		return null;
+	}
 }
