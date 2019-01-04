@@ -17,6 +17,7 @@ public class SignupRequest {
 	}
 
 	public boolean signInCheck() {
+		System.out.println("----------SignupReq------\n" + this + "\n------------\n");
 		return null != username && null != password && nickname != null && username.length() <= 16
 				&& password.length() <= 16 && nickname.length() <= 16 && identity != null && identity.length() == 18
 				&& IdentityNum.checkValidation(identity);

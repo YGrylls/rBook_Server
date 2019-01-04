@@ -5,7 +5,7 @@ import java.time.LocalDate;
 public class Group implements IEntity {
 	private String uuid;
 	private String name;
-	private int status;
+	private int status; // 0 unconfirmd, 1 confirmed, 2 closed
 	private LocalDate confirmTime;
 
 	public String getUuid() {

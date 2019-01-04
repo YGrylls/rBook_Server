@@ -5,6 +5,7 @@ public class LoginRequest {
 	private String password;
 
 	public boolean signInCheck() {
+		System.out.println("---------signinReq---\n" + this + "\n---------\n");
 		return null != username && null != password && username.length() <= 16 && password.length() <= 16;
 	}
 
