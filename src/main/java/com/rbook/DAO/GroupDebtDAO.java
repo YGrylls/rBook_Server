@@ -1,6 +1,7 @@
 package com.rbook.DAO;
 
 import org.springframework.data.neo4j.annotation.Query;
+import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -8,12 +9,12 @@ import com.rbook.mapperObject.GroupDebtNode;
 
 @Transactional
 @Repository
-public interface GroupDebtDAO {
+public interface GroupDebtDAO extends Neo4jRepository<GroupDebtNode, Long> {
 
 	@Query("MATCH (d:GroupDebt)<-[:HAS_GROUP_DEBT]-(g:Group {uuid:{0}}) RETURN count(r)")
 	public int getDebtNum(String uuid);
 
-	@Query("MATCH (u:User {username:{0}})-[r:IN_GROUP {ifConfirmed:false}]->(g:Group {uuid:{1}}) RETURN count(r)")
+	@Query("MATCH (u:User {username:{0}})-[r:IN_GROUP {ifConfirmed:false}]->(g:Group {uuid:{1},status:0}) RETURN count(r)")
 	public int checkPersonalStatus(String username, String uuid);
 
 	@Query("MATCH (u:User)-[r:IN_GROUP]->(g:Group {uuid:{1}}) WHERE u.username IN {0} RETURN count(r)")

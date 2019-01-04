@@ -40,7 +40,7 @@ public class One2OneDebtService {
 	public int tempTotal(List<One2OneDebt> list, String username) {
 		int sum = 0;
 		for (One2OneDebt l : list) {
-			if (l.getStatus() != 0)
+			if (l.getStatus() == 1 || l.getStatus() == 4)
 				continue;
 			if (l.getStart().equals(username)) {
 				sum = sum + l.getNum();

@@ -41,11 +41,11 @@ public class BrowsePairService {
 				}
 				if (map.containsKey(counter.getUsername())) {
 					System.out.println("-------map update---\n");
-					if (unread)
+					if (debt.getStatus() == 1 || debt.getStatus() == 4)
 						x = 0;
 					map.get(counter.getUsername()).update(debt.getNumber() * x, out, debt.getDate(), unread);
 				} else {
-					if (unread)
+					if (debt.getStatus() == 1 || debt.getStatus() == 4)
 						x = 0;
 					if (!out)
 						x = -x;
