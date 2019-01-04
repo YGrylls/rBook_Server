@@ -45,4 +45,12 @@ public class Group implements IEntity {
 		return "Group [uuid=" + uuid + ", name=" + name + ", status=" + status + ", confirmTime=" + confirmTime + "]";
 	}
 
+	public Group(String uuid, String name, int status, LocalDate confirmTime) {
+		super();
+		this.uuid = uuid;
+		this.name = name;
+		this.status = status;
+		this.confirmTime = confirmTime;
+	}
+
 }

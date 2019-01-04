@@ -74,7 +74,9 @@ public class One2OneDebtRequest implements IUserReq { // add new pair debt
 			if (uh != null) {
 				uhValidate = (getUsername().length() <= 16 && getPassword().length() <= 16);
 			}
-			contentValidate = counterName.length() <= 16 && desc.length() <= 140 && num <= 5000000 && num >= 0;
+			if (desc == null)
+				return false;
+			contentValidate = counterName.length() <= 16 && desc.length() <= 140 && num <= 1000000 && num >= 0;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;

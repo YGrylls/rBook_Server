@@ -7,7 +7,6 @@ public class DeleteGroupDebtRequest implements IUserReq {
 
 	private UserHeader uh;
 	private String[] list;
-	private String guid;
 
 	@Override
 	public String getUsername() {
@@ -28,7 +27,7 @@ public class DeleteGroupDebtRequest implements IUserReq {
 			if (uh != null) {
 				uhValidate = (getUsername().length() <= 16 && getPassword().length() <= 16);
 			}
-			contentValidate = guid != null && list.length > 0;
+			contentValidate = list.length > 0;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;

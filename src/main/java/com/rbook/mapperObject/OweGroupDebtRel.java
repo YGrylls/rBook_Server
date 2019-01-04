@@ -1,8 +1,8 @@
-package com.rbook.DAO;
+package com.rbook.mapperObject;
 
 import com.rbook.entity.IEntity;
 
-public class GroupNode implements IDataRes {
+public class OweGroupDebtRel implements IDataRes {
 
 	@Override
 	public IEntity toEntity() {

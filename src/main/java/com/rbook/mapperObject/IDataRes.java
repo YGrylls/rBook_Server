@@ -1,4 +1,4 @@
-package com.rbook.DAO;
+package com.rbook.mapperObject;
 
 import com.rbook.entity.IEntity;
 

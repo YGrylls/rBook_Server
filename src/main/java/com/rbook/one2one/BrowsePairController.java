@@ -1,5 +1,8 @@
 package com.rbook.one2one;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,8 +42,11 @@ public class BrowsePairController {
 		}
 		Map<String, Pair> map = browsePairService.browsePair(user.getUsername());
 		if (map != null) {
-			System.out.println("------------browsePair---------\n" + map);
-			return new IfSuccessResponse(0, "Success", map);
+			List<Pair> res = null;
+			Collection<Pair> value = map.values();
+			res = new ArrayList<Pair>(value);
+			System.out.println("------------browsePair---------\n" + res);
+			return new IfSuccessResponse(0, "Success", res);
 		} else {
 			return new IfSuccessResponse(1, "Fetch Error", null);
 		}

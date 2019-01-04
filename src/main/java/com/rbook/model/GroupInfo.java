@@ -2,6 +2,8 @@ package com.rbook.model;
 
 import java.time.LocalDate;
 
+import com.rbook.entity.Group;
+
 public class GroupInfo {
 	private String uuid;
 	private String name;
@@ -12,6 +14,16 @@ public class GroupInfo {
 
 	public String getUuid() {
 		return uuid;
+	}
+
+	public GroupInfo(Group group, int mem, boolean myConfirm) {
+		this.uuid = group.getUuid();
+		this.name = group.getName();
+		this.status = group.getStatus();
+		this.updateTime = group.getConfirmTime();
+		this.member = mem;
+		this.myConfirm = myConfirm;
+
 	}
 
 	public void setUuid(String uuid) {

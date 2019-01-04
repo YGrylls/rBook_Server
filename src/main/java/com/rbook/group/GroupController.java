@@ -1,5 +1,7 @@
 package com.rbook.group;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,6 +15,7 @@ import com.rbook.common.BrowseRequest;
 import com.rbook.common.IfSuccessResponse;
 import com.rbook.entity.User;
 import com.rbook.login.LoginService;
+import com.rbook.model.GroupInfo;
 
 @RestController
 public class GroupController {
@@ -34,23 +37,12 @@ public class GroupController {
 		if (user == null) {
 			return new IfSuccessResponse(5, "Auth Failed", null);
 		}
-		// create group
-		return null;
-	}
+		List<GroupInfo> list = groupService.browseGroup(user.getUsername());
+		if (list != null) {
+			return new IfSuccessResponse(0, "Success", list);
 
-	@ResponseBody
-	@PostMapping("/browseGroupDetail")
-	public IfSuccessResponse browseGroupDetail(@RequestBody GroupRequest req, HttpServletRequest request,
-			HttpServletResponse response) {
-		if (!req.checkValidate()) {
-			return new IfSuccessResponse(-1, "Request invalid", null);
-		}
-		User user = loginService.loginCheck(req.getUsername(), req.getPassword());
-		if (user == null) {
-			return new IfSuccessResponse(5, "Auth Failed", null);
-		}
-		// create group
-		return null;
+		} else
+			return new IfSuccessResponse(1, "Error", null);
 	}
 
 	@ResponseBody
@@ -64,8 +56,12 @@ public class GroupController {
 		if (user == null) {
 			return new IfSuccessResponse(5, "Auth Failed", null);
 		}
-		// create group
-		return null;
+		GroupInfo info = groupService.createGroup(user.getUsername(), req.getGroupName());
+		if (info == null) {
+			return new IfSuccessResponse(1, "Create Failed", null);
+		} else {
+			return new IfSuccessResponse(0, "Success", null);
+		}
 	}
 
 	@ResponseBody
@@ -79,8 +75,14 @@ public class GroupController {
 		if (user == null) {
 			return new IfSuccessResponse(5, "Auth Failed", null);
 		}
-		// add into a group
-		return null;
+
+		GroupInfo info = groupService.addGroup(user.getUsername(), req.getUuid());
+
+		if (info == null) {
+			return new IfSuccessResponse(1, "Group may not exist, be full or already confirmed", null);
+		} else {
+			return new IfSuccessResponse(0, "Success", null);
+		}
 	}
 
 }

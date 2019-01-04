@@ -7,6 +7,8 @@ import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.rbook.mapperObject.One2OneDebtRel;
+
 @Transactional
 @Repository
 public interface One2OneDebtDAO extends Neo4jRepository<One2OneDebtRel, Long> {

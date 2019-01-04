@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.rbook.DAO.One2OneDebtDAO;
-import com.rbook.DAO.One2OneDebtRel;
 import com.rbook.entity.One2OneDebt;
+import com.rbook.mapperObject.One2OneDebtRel;
 import com.rbook.util.UID;
 
 @Service
@@ -35,6 +35,20 @@ public class One2OneDebtService {
 			return null;
 		}
 		return res;
+	}
+
+	public int tempTotal(List<One2OneDebt> list, String username) {
+		int sum = 0;
+		for (One2OneDebt l : list) {
+			if (l.getStatus() != 0)
+				continue;
+			if (l.getStart().equals(username)) {
+				sum = sum + l.getNum();
+			} else if (l.getEnd().equals(username)) {
+				sum = sum - l.getNum();
+			}
+		}
+		return sum;
 	}
 
 	public boolean ifCanAdd(String username, String counter) {

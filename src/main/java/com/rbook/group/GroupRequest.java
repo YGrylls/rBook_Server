@@ -9,6 +9,27 @@ public class GroupRequest implements IUserReq {
 	private String uuid;
 
 	@Override
+	public String toString() {
+		return "GroupRequest [uh=" + uh + ", uuid=" + uuid + "]";
+	}
+
+	public UserHeader getUh() {
+		return uh;
+	}
+
+	public void setUh(UserHeader uh) {
+		this.uh = uh;
+	}
+
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
+
+	@Override
 	public String getUsername() {
 		return uh.getUsername();
 	}

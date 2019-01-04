@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.rbook.DAO.One2OneDebtDAO;
-import com.rbook.DAO.One2OneDebtRel;
 import com.rbook.DAO.UserDAO;
 import com.rbook.entity.One2OneDebt;
+import com.rbook.mapperObject.One2OneDebtRel;
 import com.rbook.util.UID;
 
 @Service

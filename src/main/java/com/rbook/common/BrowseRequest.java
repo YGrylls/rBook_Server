@@ -20,6 +20,11 @@ public class BrowseRequest implements IUserReq {
 	}
 
 	@Override
+	public String toString() {
+		return "BrowseRequest [uh=" + uh + "]";
+	}
+
+	@Override
 	public String getPassword() {
 
 		return uh.getPassword();

@@ -20,4 +20,9 @@ public class UserHeader {
 		this.password = password;
 	}
 
+	@Override
+	public String toString() {
+		return "UserHeader [username=" + username + ", password= 不告诉你 ]";
+	}
+
 }

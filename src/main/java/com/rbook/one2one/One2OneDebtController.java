@@ -106,7 +106,8 @@ public class One2OneDebtController {
 		List<One2OneDebt> list = one2OneDebtService.browsePairDebt(user.getUsername(), req.getCounter());
 		if (list != null) {
 			System.out.println("------------browsePairDebt---------\n" + list);
-			return new IfSuccessResponse(0, "Sueccess", list);
+			int sum = one2OneDebtService.tempTotal(list, user.getUsername());
+			return new IfSuccessResponse(0, "" + sum, list);
 		} else {
 			return new IfSuccessResponse(1, "Fetch Error", null);
 		}

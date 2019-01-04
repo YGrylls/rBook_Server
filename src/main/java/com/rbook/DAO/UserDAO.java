@@ -7,6 +7,8 @@ import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.rbook.mapperObject.UserNode;
+
 @Transactional
 @Repository
 public interface UserDAO extends Neo4jRepository<UserNode, Long> {

@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.rbook.DAO.One2OneDebtDAO;
-import com.rbook.DAO.One2OneDebtRel;
 import com.rbook.entity.User;
+import com.rbook.mapperObject.One2OneDebtRel;
 import com.rbook.model.Pair;
 
 @Service

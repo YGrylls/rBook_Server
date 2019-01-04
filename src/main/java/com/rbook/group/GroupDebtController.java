@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rbook.common.IfSuccessResponse;
+import com.rbook.entity.GroupDebt;
 import com.rbook.entity.User;
 import com.rbook.login.LoginService;
 
@@ -34,7 +35,16 @@ public class GroupDebtController {
 			return new IfSuccessResponse(5, "Auth Failed", null);
 		}
 		// propose a new group debt
-		return null;
+
+		GroupDebt res = groupDebtService.proposeGroupDebt(user.getUsername(), req.getGuid(), req.getDesc(),
+				req.getNum(), req.getTargetList());
+
+		if (res != null) {
+			return new IfSuccessResponse(0, "Success", res);
+		} else {
+			return new IfSuccessResponse(1, "Propose Failed, check your request and target users", null);
+		}
+
 	}
 
 	@ResponseBody
@@ -64,6 +74,21 @@ public class GroupDebtController {
 			return new IfSuccessResponse(5, "Auth Failed", null);
 		}
 		// delete a group debt
+		return null;
+	}
+
+	@ResponseBody
+	@PostMapping("/browseGroupDetail")
+	public IfSuccessResponse browseGroupDetail(@RequestBody GroupRequest req, HttpServletRequest request,
+			HttpServletResponse response) {
+		if (!req.checkValidate()) {
+			return new IfSuccessResponse(-1, "Request invalid", null);
+		}
+		User user = loginService.loginCheck(req.getUsername(), req.getPassword());
+		if (user == null) {
+			return new IfSuccessResponse(5, "Auth Failed", null);
+		}
+		// create group
 		return null;
 	}
 }

@@ -9,7 +9,25 @@ public class ProposeGroupDebtRequest implements IUserReq {
 
 	private UserHeader uh;
 	private String guid;
+	private String desc;
+	private int num;
 	private String[] targetList;
+
+	public String getDesc() {
+		return desc;
+	}
+
+	public int getNum() {
+		return num;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
 
 	public UserHeader getUh() {
 		return uh;
@@ -37,8 +55,8 @@ public class ProposeGroupDebtRequest implements IUserReq {
 
 	@Override
 	public String toString() {
-		return "ProposeGroupDebtRequest [uh=" + uh + ", guid=" + guid + ", targetList=" + Arrays.toString(targetList)
-				+ "]";
+		return "ProposeGroupDebtRequest [uh=" + uh + ", guid=" + guid + ", desc=" + desc + ", num=" + num
+				+ ", targetList=" + Arrays.toString(targetList) + "]";
 	}
 
 	@Override
@@ -60,7 +78,7 @@ public class ProposeGroupDebtRequest implements IUserReq {
 			if (uh != null) {
 				uhValidate = (getUsername().length() <= 16 && getPassword().length() <= 16);
 			}
-			contentValidate = true;
+
 			if (guid == null)
 				return false;
 			for (String u : targetList) {
@@ -68,6 +86,7 @@ public class ProposeGroupDebtRequest implements IUserReq {
 					return false;
 				}
 			}
+			contentValidate = (desc.length() <= 140 && targetList.length <= 19 && num >= 0 && num <= 1000000);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;

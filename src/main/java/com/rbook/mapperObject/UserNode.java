@@ -1,4 +1,4 @@
-package com.rbook.DAO;
+package com.rbook.mapperObject;
 
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;

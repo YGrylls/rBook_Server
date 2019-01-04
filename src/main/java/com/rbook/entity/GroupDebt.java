@@ -8,6 +8,14 @@ public class GroupDebt implements IEntity {
 	private int num;
 	private LocalDate time;
 
+	public GroupDebt(String uuid, String desc, int num, LocalDate time) {
+		super();
+		this.uuid = uuid;
+		this.desc = desc;
+		this.num = num;
+		this.time = time;
+	}
+
 	public String getUuid() {
 		return uuid;
 	}
