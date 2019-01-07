@@ -85,4 +85,20 @@ public class GroupController {
 		}
 	}
 
+	@ResponseBody
+	@PostMapping("/browseGroupMember")
+	public IfSuccessResponse browseGroupMember(@RequestBody GroupRequest req, HttpServletRequest request,
+			HttpServletResponse response) {
+		if (!req.checkValidate()) {
+			return new IfSuccessResponse(-1, "Request invalid", null);
+		}
+		User user = loginService.loginCheck(req.getUsername(), req.getPassword());
+		if (user == null) {
+			return new IfSuccessResponse(5, "Auth Failed", null);
+		}
+
+		// return a list of user
+		return null;
+	}
+
 }

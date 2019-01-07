@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rbook.common.IfSuccessResponse;
+import com.rbook.entity.Group;
 import com.rbook.entity.User;
 import com.rbook.login.LoginService;
 
@@ -34,7 +35,12 @@ public class GroupConfirmController {
 			return new IfSuccessResponse(5, "Auth Failed", null);
 		}
 		// confirm a group
-		return null;
+		Group res = groupConfirmService.personalGroupConfirm(user.getUsername(), req.getUuid());
+		if (res == null) {
+			return new IfSuccessResponse(1, "Failed, not in group or already confirmed", null);
+		} else {
+			return new IfSuccessResponse(0, "Success", res);
+		}
 	}
 
 }

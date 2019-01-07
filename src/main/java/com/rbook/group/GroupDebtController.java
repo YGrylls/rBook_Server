@@ -81,12 +81,13 @@ public class GroupDebtController {
 			return new IfSuccessResponse(5, "Auth Failed", null);
 		}
 
-		// browse member
+		// browse debt member
+		// return a list of user
 		return null;
 	}
 
 	@ResponseBody
-	@PostMapping("/browseGroupDetail")
+	@PostMapping("/browseGroupDebt")
 	public IfSuccessResponse browseGroupDetail(@RequestBody GroupRequest req, HttpServletRequest request,
 			HttpServletResponse response) {
 		if (!req.checkValidate()) {
@@ -97,7 +98,7 @@ public class GroupDebtController {
 			return new IfSuccessResponse(5, "Auth Failed", null);
 		}
 		// browse groupdebt
-
+		// return a list of groupdebtinfo
 		return null;
 	}
 }
