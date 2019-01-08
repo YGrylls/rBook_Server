@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.rbook.mapperObject.FindGroup;
 import com.rbook.mapperObject.GroupDebtNode;
 import com.rbook.mapperObject.GroupNode;
+import com.rbook.mapperObject.UserNode;
 
 @Transactional
 @Repository
@@ -39,4 +40,7 @@ public interface GroupDAO extends Neo4jRepository<GroupNode, Long> {
 
 	@Query("MATCH (g:Group {uuid :{0}})-[:HAS_GROUP_DEBT]->(d:GroupDebt) SET g.status=1,g.confirmTime={1} RETURN d")
 	public List<GroupDebtNode> confirmGroup(String uuid, String date);
+
+	@Query("MATCH (g:Group {uuid:{0}})<-[:IN_GROUP]-(u :User) RETURN u")
+	public List<UserNode> getGroupMember(String uuid);
 }

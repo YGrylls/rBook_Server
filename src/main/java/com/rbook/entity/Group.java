@@ -6,7 +6,7 @@ public class Group implements IEntity {
 	private String uuid;
 	private String name;
 	private int status; // 0 unconfirmd, 1 confirmed, 2 closed
-	private LocalDate confirmTime;
+	private LocalDate confirmTime;// if unconfirmed, it's create time; if confirmed, it's confirm time
 
 	public String getUuid() {
 		return uuid;

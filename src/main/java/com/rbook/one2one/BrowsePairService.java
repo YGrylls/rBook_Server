@@ -40,7 +40,6 @@ public class BrowsePairService {
 					out = false;
 				}
 				if (map.containsKey(counter.getUsername())) {
-					System.out.println("-------map update---\n");
 					if (debt.getStatus() == 1 || debt.getStatus() == 4)
 						x = 0;
 					map.get(counter.getUsername()).update(debt.getNumber() * x, out, debt.getDate(), unread);

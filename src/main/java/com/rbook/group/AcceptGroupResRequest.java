@@ -3,15 +3,11 @@ package com.rbook.group;
 import com.rbook.common.IUserReq;
 import com.rbook.common.UserHeader;
 
-public class GroupRequest implements IUserReq {
+public class AcceptGroupResRequest implements IUserReq {
 
 	private UserHeader uh;
 	private String uuid;
-
-	@Override
-	public String toString() {
-		return "GroupRequest [uh=" + uh + ", uuid=" + uuid + "]";
-	}
+	private boolean ifStart;
 
 	public UserHeader getUh() {
 		return uh;
@@ -27,6 +23,19 @@ public class GroupRequest implements IUserReq {
 
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
+	}
+
+	@Override
+	public String toString() {
+		return "AcceptGroupResRequest [uh=" + uh + ", uuid=" + uuid + ", ifStart=" + ifStart + "]";
+	}
+
+	public boolean isIfStart() {
+		return ifStart;
+	}
+
+	public void setIfStart(boolean ifStart) {
+		this.ifStart = ifStart;
 	}
 
 	@Override

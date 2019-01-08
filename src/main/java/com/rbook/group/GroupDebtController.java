@@ -111,6 +111,7 @@ public class GroupDebtController {
 		// return a list of groupdebtinfo
 
 		List<GroupDebtInfo> res = groupDebtService.browseGroupDebt(user.getUsername(), req.getUuid());
+
 		if (res != null) {
 			return new IfSuccessResponse(0, "Success", res);
 		} else {

@@ -1,12 +1,29 @@
 package com.rbook.model;
 
-public class GroupResInfo {
+import com.rbook.entity.GroupRes;
+import com.rbook.entity.User;
+
+public class GroupResInfo implements Comparable<GroupResInfo> {
 
 	private String counter;
 	private String counterNickname;
 	private int num;
 	private boolean myStatus;
 	private boolean counterStatus;
+
+	public GroupResInfo(GroupRes res, User counter, String username, boolean ifStart) {
+		this.counter = counter.getUsername();
+		this.counterNickname = counter.getNickname();
+		if (ifStart) {
+			myStatus = res.isStart();
+			counterStatus = res.isEnd();
+			num = res.getNum();
+		} else {
+			myStatus = res.isEnd();
+			counterStatus = res.isStart();
+			num = -res.getNum();
+		}
+	}
 
 	public String getCounter() {
 		return counter;
@@ -52,6 +69,25 @@ public class GroupResInfo {
 	public String toString() {
 		return "GroupResInfo [counter=" + counter + ", counterNickname=" + counterNickname + ", num=" + num
 				+ ", myStatus=" + myStatus + ", counterStatus=" + counterStatus + "]";
+	}
+
+	@Override
+	public int compareTo(GroupResInfo o) {
+		// TODO Auto-generated method stub
+		if (myStatus && !o.myStatus) {
+			return 1;
+		}
+		if (!myStatus && o.myStatus) {
+			return -1;
+		}
+		if (counterStatus && !o.counterStatus) {
+			return 1;
+		}
+		if (!counterStatus && o.counterStatus) {
+			return -1;
+		}
+
+		return 0;
 	}
 
 }

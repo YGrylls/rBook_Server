@@ -7,6 +7,14 @@ public class GroupRes implements IEntity {
 	private boolean end;
 	private boolean status;
 
+	public GroupRes(String uuid, int num, boolean start, boolean end, boolean status) {
+		this.uuid = uuid;
+		this.num = num;
+		this.start = start;
+		this.end = end;
+		this.status = status;
+	}
+
 	public String getUuid() {
 		return uuid;
 	}
@@ -52,4 +60,5 @@ public class GroupRes implements IEntity {
 		return "GroupRes [uuid=" + uuid + ", num=" + num + ", start=" + start + ", end=" + end + ", status=" + status
 				+ "]";
 	}
+
 }

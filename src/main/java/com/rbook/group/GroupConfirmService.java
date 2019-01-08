@@ -13,7 +13,6 @@ import com.rbook.DAO.GroupResDAO;
 import com.rbook.entity.Group;
 import com.rbook.mapperObject.GroupDebtNode;
 import com.rbook.mapperObject.GroupNode;
-import com.rbook.mapperObject.GroupResNode;
 
 @Service
 public class GroupConfirmService {
@@ -53,8 +52,12 @@ public class GroupConfirmService {
 		for (GroupDebtNode n : debtList) {
 			idList.add(n.toEntity().getUuid());
 		}
-		List<GroupResNode> resList = groupResDAO.createRes((String[]) idList.toArray());
+		List<String> resList = groupResDAO.createRes((String[]) idList.toArray());
+
 		assert (resList != null);
+
+		int linkRes = groupResDAO.linkResToGroup((String[]) resList.toArray(), group.getUuid());
+		assert (linkRes == resList.size());
 
 		return true;
 	}

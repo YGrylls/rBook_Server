@@ -12,8 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.rbook.DAO.GroupDAO;
 import com.rbook.entity.Group;
+import com.rbook.entity.User;
 import com.rbook.mapperObject.FindGroup;
 import com.rbook.mapperObject.GroupNode;
+import com.rbook.mapperObject.UserNode;
 import com.rbook.model.GroupInfo;
 import com.rbook.util.UID;
 
@@ -85,6 +87,32 @@ public class GroupService {
 			e.printStackTrace();
 			return null;
 		}
+
+	}
+
+	public List<User> browseGroupMember(String uuid, String username) {
+		ArrayList<User> resList = null;
+		boolean ifIn = false;
+		try {
+			resList = new ArrayList<User>();
+
+			List<UserNode> queryRes = groupDAO.getGroupMember(uuid);
+			if (queryRes == null)
+				return null;
+			for (UserNode un : queryRes) {
+				User user = un.toEntity();
+				if (user.getUsername().equals(username))
+					ifIn = true;
+				resList.add(user);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		if (ifIn)
+			return resList;
+		else
+			return null;
 
 	}
 

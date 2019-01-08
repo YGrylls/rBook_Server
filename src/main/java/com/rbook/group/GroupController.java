@@ -98,7 +98,12 @@ public class GroupController {
 		}
 
 		// return a list of user
-		return null;
+		List<User> res = groupService.browseGroupMember(req.getUuid(), user.getUsername());
+		if (res == null) {
+			return new IfSuccessResponse(1, "Failed, not in group or group not exist", null);
+		} else {
+			return new IfSuccessResponse(0, "Success", res);
+		}
 	}
 
 }
