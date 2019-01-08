@@ -2,18 +2,31 @@ package com.rbook.model;
 
 import java.time.LocalDate;
 
+import com.rbook.entity.GroupDebt;
+import com.rbook.entity.User;
+
 public class GroupDebtInfo {
 
 	private String uuid;
 	private String desc;
 	private int num;
 	private LocalDate time;
-	private int involve; // 0 not involved, 1 proposal, 2 targeted
+	private boolean propose; // true if user proposes it , false if not
 	private String proposeName;
 	private String proposeNickName;
 
 	public String getUuid() {
 		return uuid;
+	}
+
+	public GroupDebtInfo(GroupDebt debt, User proposer, String username) {
+		uuid = debt.getUuid();
+		desc = debt.getDesc();
+		num = debt.getNum();
+		time = debt.getTime();
+		propose = proposer.getUsername() == username;
+		proposeName = proposer.getUsername();
+		proposeNickName = proposer.getNickname();
 	}
 
 	public void setUuid(String uuid) {
@@ -44,14 +57,6 @@ public class GroupDebtInfo {
 		this.time = time;
 	}
 
-	public int getInvolve() {
-		return involve;
-	}
-
-	public void setInvolve(int involve) {
-		this.involve = involve;
-	}
-
 	public String getProposeName() {
 		return proposeName;
 	}
@@ -68,10 +73,18 @@ public class GroupDebtInfo {
 		this.proposeNickName = proposeNickName;
 	}
 
+	public boolean isPropose() {
+		return propose;
+	}
+
+	public void setPropose(boolean propose) {
+		this.propose = propose;
+	}
+
 	@Override
 	public String toString() {
-		return "GroupDebtInfo [uuid=" + uuid + ", desc=" + desc + ", num=" + num + ", time=" + time + ", involve="
-				+ involve + ", proposeName=" + proposeName + ", proposeNickName=" + proposeNickName + "]";
+		return "GroupDebtInfo [uuid=" + uuid + ", desc=" + desc + ", num=" + num + ", time=" + time + ", propose="
+				+ propose + ", proposeName=" + proposeName + ", proposeNickName=" + proposeNickName + "]";
 	}
 
 }

@@ -1,28 +1,34 @@
 package com.rbook.group;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.rbook.DAO.GroupDAO;
 import com.rbook.DAO.GroupDebtDAO;
 import com.rbook.entity.GroupDebt;
+import com.rbook.entity.User;
 import com.rbook.mapperObject.GroupDebtNode;
+import com.rbook.mapperObject.UserNode;
+import com.rbook.model.GroupDebtInfo;
 import com.rbook.util.UID;
 
 @Service
 public class GroupDebtService {
 
 	@Autowired
-	private GroupDAO groupDAO;
-
-	@Autowired
 	private GroupDebtDAO groupDebtDAO;
 
 	public boolean canPropose(String username, String uuid, String[] targetList) {
 		try {
+			for (String n : targetList) { // check if self is the target
+				if (n.equals(username))
+					return false;
+			}
 			int personal = groupDebtDAO.checkPersonalStatus(username, uuid);
 			if (personal != 1)
 				return false;
@@ -33,10 +39,6 @@ public class GroupDebtService {
 			if (target != targetList.length)
 				return false;
 
-			for (String n : targetList) {
-				if (n.equals(username))
-					return false;
-			}
 			return true;
 
 		} catch (Exception e) {
@@ -84,6 +86,43 @@ public class GroupDebtService {
 			e.printStackTrace();
 			return false;
 		}
+
+	}
+
+	public List<GroupDebtInfo> browseGroupDebt(String username, String uuid) {
+
+		ArrayList<GroupDebtInfo> resList = null;
+		try {
+			Map<GroupDebtNode, UserNode> queryRes = groupDebtDAO.findGroupDebt(uuid);
+			assert (queryRes != null);
+			resList = new ArrayList<GroupDebtInfo>();
+			for (Map.Entry<GroupDebtNode, UserNode> g : queryRes.entrySet()) {
+				GroupDebt debt = g.getKey().toEntity();
+				User proposer = g.getValue().toEntity();
+				resList.add(new GroupDebtInfo(debt, proposer, username));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			resList = null;
+		}
+		return resList;
+
+	}
+
+	public List<User> browseDebtMember(String uuid) {
+		ArrayList<User> resList = null;
+		try {
+			List<UserNode> queryRes = groupDebtDAO.findGroupDebtMember(uuid);
+			assert (queryRes != null && queryRes.size() > 0);
+			resList = new ArrayList<User>();
+			for (UserNode n : queryRes) {
+				resList.add(n.toEntity());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			resList = null;
+		}
+		return resList;
 
 	}
 

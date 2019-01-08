@@ -86,7 +86,8 @@ public class ProposeGroupDebtRequest implements IUserReq {
 					return false;
 				}
 			}
-			contentValidate = (desc.length() <= 140 && targetList.length <= 19 && num >= 0 && num <= 1000000);
+			contentValidate = (desc.length() <= 140 && targetList.length <= 19 && targetList.length > 0 && num >= 0
+					&& num <= 1000000);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;

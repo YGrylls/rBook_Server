@@ -2,6 +2,7 @@ package com.rbook.one2one;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +33,7 @@ public class BrowsePairController {
 	@ResponseBody
 	@PostMapping("/browsePair")
 	public IfSuccessResponse browsePairDebt(@RequestBody BrowseRequest req, HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) { // need be sorted
 		if (!req.checkValidate()) {
 			return new IfSuccessResponse(-1, "Request invalid", null);
 		}
@@ -45,6 +46,7 @@ public class BrowsePairController {
 			List<Pair> res = null;
 			Collection<Pair> value = map.values();
 			res = new ArrayList<Pair>(value);
+			Collections.sort(res);
 			System.out.println("------------browsePair---------\n" + res);
 			return new IfSuccessResponse(0, "Success", res);
 		} else {

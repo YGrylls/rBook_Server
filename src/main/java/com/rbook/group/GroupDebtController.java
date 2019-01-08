@@ -1,5 +1,7 @@
 package com.rbook.group;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,6 +15,7 @@ import com.rbook.common.IfSuccessResponse;
 import com.rbook.entity.GroupDebt;
 import com.rbook.entity.User;
 import com.rbook.login.LoginService;
+import com.rbook.model.GroupDebtInfo;
 
 @RestController
 public class GroupDebtController {
@@ -80,10 +83,17 @@ public class GroupDebtController {
 		if (user == null) {
 			return new IfSuccessResponse(5, "Auth Failed", null);
 		}
-
+		// ATTENTION: the uuid in the req here should refer to the uuid of the target
+		// debt
 		// browse debt member
 		// return a list of user
-		return null;
+
+		List<User> res = groupDebtService.browseDebtMember(req.getUuid());
+		if (res != null) {
+			return new IfSuccessResponse(0, "Success", res);
+		} else {
+			return new IfSuccessResponse(1, "Error", null);
+		}
 	}
 
 	@ResponseBody
@@ -99,6 +109,13 @@ public class GroupDebtController {
 		}
 		// browse groupdebt
 		// return a list of groupdebtinfo
-		return null;
+
+		List<GroupDebtInfo> res = groupDebtService.browseGroupDebt(user.getUsername(), req.getUuid());
+		if (res != null) {
+			return new IfSuccessResponse(0, "Success", res);
+		} else {
+			return new IfSuccessResponse(1, "Error", null);
+		}
+
 	}
 }

@@ -2,7 +2,7 @@ package com.rbook.entity;
 
 import java.time.LocalDate;
 
-public class One2OneDebt implements IEntity {
+public class One2OneDebt implements IEntity, Comparable<One2OneDebt> {
 	private String uuid;
 	private int num;
 	private LocalDate date;
@@ -93,6 +93,20 @@ public class One2OneDebt implements IEntity {
 	public String toString() {
 		return "One2OneDebt [uuid=" + uuid + ", num=" + num + ", date=" + date + ", desc=" + desc + ", status=" + status
 				+ ", start=" + start + ", end=" + end + ", proposal=" + proposal + "]";
+	}
+
+	@Override
+	public int compareTo(One2OneDebt o) {
+		// TODO Auto-generated method stub
+		if (status > o.getStatus())
+			return -1;
+		else if (status < o.getStatus())
+			return 1;
+
+		if (date.isAfter(o.getDate())) {
+			return -1;
+		} else
+			return 1;
 	}
 
 }

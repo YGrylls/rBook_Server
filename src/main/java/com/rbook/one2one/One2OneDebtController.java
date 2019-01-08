@@ -1,5 +1,6 @@
 package com.rbook.one2one;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -95,7 +96,7 @@ public class One2OneDebtController {
 	@ResponseBody
 	@PostMapping("/browsePairDebt")
 	public IfSuccessResponse certainPairDebt(@RequestBody CounterRequest req, HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) { // need be sorted
 		if (!req.checkValidate()) {
 			return new IfSuccessResponse(-1, "Request invalid", null);
 		}
@@ -105,6 +106,7 @@ public class One2OneDebtController {
 		}
 		List<One2OneDebt> list = one2OneDebtService.browsePairDebt(user.getUsername(), req.getCounter());
 		if (list != null) {
+			Collections.sort(list);
 			System.out.println("------------browsePairDebt---------\n" + list);
 			int sum = one2OneDebtService.tempTotal(list, user.getUsername());
 			return new IfSuccessResponse(0, "" + sum, list);

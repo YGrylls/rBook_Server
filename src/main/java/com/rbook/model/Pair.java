@@ -2,7 +2,7 @@ package com.rbook.model;
 
 import java.time.LocalDate;
 
-public class Pair {
+public class Pair implements Comparable<Pair> {
 
 	private String name;
 	private int totalNum;
@@ -74,6 +74,21 @@ public class Pair {
 			this.date = date;
 		}
 		this.unread = this.unread || unread;
+	}
+
+	@Override
+	public int compareTo(Pair o) {
+		// TODO Auto-generated method stub
+		if (unread && !o.unread) {
+			return -1;
+		}
+		if (!unread && o.unread) {
+			return 1;
+		}
+		if (date.isAfter(o.getDate())) {
+			return -1;
+		} else
+			return 1;
 	}
 
 }
