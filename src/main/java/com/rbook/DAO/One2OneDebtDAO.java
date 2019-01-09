@@ -52,4 +52,5 @@ public interface One2OneDebtDAO extends Neo4jRepository<One2OneDebtRel, Long> {
 
 	@Query("MATCH (n)-[r:ONE2ONE_DEBT]-(m) WHERE r.uuid={0} DELETE r")
 	public void deleteDebt(String id);
+
 }

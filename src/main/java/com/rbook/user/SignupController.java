@@ -1,4 +1,4 @@
-package com.rbook.signup;
+package com.rbook.user;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

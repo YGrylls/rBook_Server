@@ -1,4 +1,4 @@
-package com.rbook.signup;
+package com.rbook.user;
 
 import com.rbook.util.IdentityNum;
 

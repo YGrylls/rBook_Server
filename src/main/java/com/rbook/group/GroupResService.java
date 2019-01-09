@@ -48,19 +48,38 @@ public class GroupResService {
 	}
 
 	@Transactional
+	public void tryCloseGroup(String uuid) {// the uuid here is the uuid of a related groupRes
+		List<Boolean> boolList = groupResDAO.getAllResStatusByResID(uuid);
+		assert (boolList != null && boolList.size() >= 1);
+		boolean flg = true;
+		for (Boolean b : boolList) {
+			flg = flg && b;
+		}
+		if (flg) {
+			int res = groupResDAO.closeGroup(uuid);
+			assert (res == 1);
+		}
+
+	}
+
+	@Transactional
 	public GroupRes acceptGroupRes(String username, String uuid, boolean ifStart) {
 		GroupRes res = null;
 		if (ifStart) {
 			GroupResNode resNode = groupResDAO.acceptGroupResIn(username, uuid);
 			if (resNode == null)
 				return null;
+
 			res = resNode.toEntity();
+			tryCloseGroup(uuid);
 
 		} else {
 			GroupResNode resNode = groupResDAO.acceptGroupResOut(username, uuid);
 			if (resNode == null)
 				return null;
+
 			res = resNode.toEntity();
+			tryCloseGroup(uuid);
 		}
 		return res;
 

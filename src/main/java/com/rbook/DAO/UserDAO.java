@@ -7,6 +7,7 @@ import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.rbook.mapperObject.LoopCheckNode;
 import com.rbook.mapperObject.UserNode;
 
 @Transactional
@@ -24,5 +25,20 @@ public interface UserDAO extends Neo4jRepository<UserNode, Long> {
 
 	@Query("MATCH (n:User {username:{0}, password:{1}}) RETURN n")
 	public List<UserNode> loginCheck(String name, String password);
+
+	@Query("MATCH (n:User) SET n.totalAccount=0 RETURN n")
+	public List<UserNode> removeOldTotalAccount();
+
+	@Query("MATCH (a:User)-[r:ONE2ONE_DEBT]->(b:User) WHERE r.status IN [0,2,3] SET a.totalAccount=a.totalAccount+r.number, b.totalAccount=b.totalAccount-r.number")
+	public void updateAllTotalAccount();
+
+	@Query("MATCH (l:LoopCheck) DETACH DELETE l")
+	public void removeOldLoop();
+
+	@Query("MATCH path=(u:User{username:{0}})-[:ONE2ONE_DEBT]-(s:User)-[:ONE2ONE_DEBT*1..3 {status:0}]-(e:User)-[:ONE2ONE_DEBT]-(m:User{username:{0}}) WHERE SIZE(apoc.coll.toSet(NODES(path))) = LENGTH(path) WITH DISTINCT s.username AS startu, e.username AS endu, LENGTH(path) AS scales MATCH (t:User{username:{0}}) CREATE (t)-[:IN_LOOP]->(l:LoopCheck {start:startu,end:endu,scale:scales})")
+	public void addNewLoop(String username);
+
+	@Query("MATCH (u:User{username:{0}})-[:IN_LOOP]->(l:LoopCheck) RETURN l")
+	public List<LoopCheckNode> getLoopCheck(String username);
 
 }

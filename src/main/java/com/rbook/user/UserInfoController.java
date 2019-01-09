@@ -1,31 +1,33 @@
-package com.rbook.one2one;
+package com.rbook.user;
+
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
+import com.rbook.common.BrowseRequest;
 import com.rbook.common.IfSuccessResponse;
-import com.rbook.entity.One2OneDebt;
+import com.rbook.entity.LoopCheck;
 import com.rbook.entity.User;
-import com.rbook.user.LoginService;
 
-@RestController
-public class ConstructController {
+@Controller
+public class UserInfoController {
 
 	@Autowired
 	private LoginService loginService;
 
 	@Autowired
-	private ConstructService constructService;
+	private UserInfoService userInfoService;
 
-	@PostMapping("/One2OneConstruct")
 	@ResponseBody
-	public IfSuccessResponse construct(@RequestBody ConstructRequest req, HttpServletRequest request,
+	@PostMapping("/browserUserInfo")
+	public IfSuccessResponse browseUserInfo(@RequestBody BrowseRequest req, HttpServletRequest request,
 			HttpServletResponse response) {
 		if (!req.checkValidate()) {
 			return new IfSuccessResponse(-1, "Request invalid", null);
@@ -34,12 +36,11 @@ public class ConstructController {
 		if (user == null) {
 			return new IfSuccessResponse(5, "Auth Failed", null);
 		}
-		One2OneDebt debt = constructService.constructPair(user.getUsername(), req.getCounterName(), req.getDesc());
-		if (debt == null) {
-			return new IfSuccessResponse(1, "User not exists or you two already paired", null);
+		List<LoopCheck> res = userInfoService.browseLoopCheck(user.getUsername());
+		if (res != null) {
+			return new IfSuccessResponse(0, "Success", res);
 		} else {
-			System.out.println("------------ConstructPair---------\n" + debt);
-			return new IfSuccessResponse(0, "Success", debt);
+			return new IfSuccessResponse(2, "Failed", null);
 		}
 
 	}

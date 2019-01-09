@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.rbook.common.IfSuccessResponse;
 import com.rbook.entity.GroupDebt;
 import com.rbook.entity.User;
-import com.rbook.login.LoginService;
 import com.rbook.model.GroupDebtInfo;
+import com.rbook.user.LoginService;
 
 @RestController
 public class GroupDebtController {

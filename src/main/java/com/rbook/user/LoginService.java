@@ -1,4 +1,4 @@
-package com.rbook.login;
+package com.rbook.user;
 
 import java.util.List;
 
