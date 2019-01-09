@@ -19,7 +19,7 @@ public class GroupNode implements IDataRes {
 	@Property("uuid")
 	private String uuid;
 
-	@Property("nmae")
+	@Property("name")
 	private String name;
 
 	@Property("status")

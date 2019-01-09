@@ -36,7 +36,7 @@ public interface GroupDebtDAO extends Neo4jRepository<GroupDebtNode, Long> {
 	@Query("MATCH (d:GroupDebt {uuid:{0}}) DETACH DELETE d")
 	public void deleteGroupDebt(String[] targetList);
 
-	@Query("MATCH (u:User)-[:PROPOSE_GROUP_DEBT]->(d:GroupDebt)<-[:HAS_GROUP_DEBT]-(g:Group {uuid:{0}}) RETURN g AS group, u AS user")
+	@Query("MATCH (u:User)-[:PROPOSE_GROUP_DEBT]->(d:GroupDebt)<-[:HAS_GROUP_DEBT]-(g:Group {uuid:{0}}) RETURN d AS debt, u AS user")
 	public List<GroupDebtNodeUserNode> findGroupDebt(String uuid);
 
 	@Query("MATCH (d:GroupDebt {uuid:{0}})-[:OWE_GROUP_DEBT]->(u: User) RETURN u")

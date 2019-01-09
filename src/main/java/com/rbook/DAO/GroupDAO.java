@@ -30,7 +30,7 @@ public interface GroupDAO extends Neo4jRepository<GroupNode, Long> {
 	@Query("MATCH (u:User {username:{0}})-[r:IN_GROUP]->(g:Group) RETURN g AS group, r.ifConfirmed AS confirm")
 	public List<GroupNodeBoolean> checkAllGroup(String username);
 
-	@Query("MATCH (u:User {username: {0}}), (g: Group {uuid:{1}}) CREATE (u)-[r:IN_GROUP {ifConfirmed:{3}}]->(g) RETURN count(r) ")
+	@Query("MATCH (u:User {username: {0}}), (g: Group {uuid:{1}}) MERGE (u)-[r:IN_GROUP {ifConfirmed:{2}}]->(g) RETURN count(r) ")
 	public int addGroup(String username, String uuid, boolean confirmed);
 
 	@Query("MATCH (u:User {username: {0}})-[r :IN_GROUP {ifConfirmed:{1}}]->(g:Group {uuid :{2}}) SET r.ifConfirmed={3} RETURN g")

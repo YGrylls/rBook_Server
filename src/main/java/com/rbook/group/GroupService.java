@@ -30,9 +30,11 @@ public class GroupService {
 	public GroupInfo createGroup(String username, String groupName) {
 		Group group = groupDAO.createGroup(UID.generate(), groupName, 0, LocalDate.now().toString()).toEntity();
 		assert (group != null);
-		GroupInfo add = addGroup(username, group.getUuid());
-		assert (add != null);
-		return add;
+		System.out.println("--------groupcreate------\n" + group + "\n---------\n");
+		int count = groupDAO.addGroup(username, group.getUuid(), false);
+		assert (count == 1);
+		GroupInfo res = new GroupInfo(group, 1, false);
+		return res;
 	}
 
 	public FindGroup findGroupMem(String guid) {
@@ -50,6 +52,8 @@ public class GroupService {
 	public GroupInfo addGroup(String username, String guid) {
 		GroupInfo res = null;
 		FindGroup find = findGroupMem(guid);
+		if (find == null)
+			return null;
 		Group group = find.getGroup().toEntity();
 		int mem = find.getMember();
 		if (mem >= 0 && mem < 20 && group != null) {
