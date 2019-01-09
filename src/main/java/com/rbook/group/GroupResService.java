@@ -2,7 +2,6 @@ package com.rbook.group;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +11,7 @@ import com.rbook.DAO.GroupResDAO;
 import com.rbook.entity.GroupRes;
 import com.rbook.entity.User;
 import com.rbook.mapperObject.GroupResNode;
-import com.rbook.mapperObject.UserNode;
+import com.rbook.mapperObject.GroupResNodeUserNode;
 import com.rbook.model.GroupResInfo;
 
 @Service
@@ -24,19 +23,19 @@ public class GroupResService {
 	public List<GroupResInfo> browseGroupRes(String username, String uuid) {
 		ArrayList<GroupResInfo> res = null;
 		try {
-			Map<GroupResNode, UserNode> queryIn = groupResDAO.getResListIn(username, uuid);
+			List<GroupResNodeUserNode> queryIn = groupResDAO.getResListIn(username, uuid);
 			assert (queryIn != null);
-			Map<GroupResNode, UserNode> queryOut = groupResDAO.getResListOut(username, uuid);
+			List<GroupResNodeUserNode> queryOut = groupResDAO.getResListOut(username, uuid);
 			assert (queryOut != null);
 			res = new ArrayList<GroupResInfo>();
-			for (Map.Entry<GroupResNode, UserNode> o : queryIn.entrySet()) {
-				GroupRes tempRes = o.getKey().toEntity();
-				User tempUser = o.getValue().toEntity();
+			for (GroupResNodeUserNode o : queryIn) {
+				GroupRes tempRes = o.getRes().toEntity();
+				User tempUser = o.getUser().toEntity();
 				res.add(new GroupResInfo(tempRes, tempUser, username, true));
 			}
-			for (Map.Entry<GroupResNode, UserNode> o : queryOut.entrySet()) {
-				GroupRes tempRes = o.getKey().toEntity();
-				User tempUser = o.getValue().toEntity();
+			for (GroupResNodeUserNode o : queryOut) {
+				GroupRes tempRes = o.getRes().toEntity();
+				User tempUser = o.getUser().toEntity();
 				res.add(new GroupResInfo(tempRes, tempUser, username, false));
 			}
 		} catch (Exception e) {

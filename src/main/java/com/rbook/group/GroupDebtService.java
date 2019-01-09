@@ -3,7 +3,6 @@ package com.rbook.group;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +12,7 @@ import com.rbook.DAO.GroupDebtDAO;
 import com.rbook.entity.GroupDebt;
 import com.rbook.entity.User;
 import com.rbook.mapperObject.GroupDebtNode;
+import com.rbook.mapperObject.GroupDebtNodeUserNode;
 import com.rbook.mapperObject.UserNode;
 import com.rbook.model.GroupDebtInfo;
 import com.rbook.util.UID;
@@ -93,12 +93,12 @@ public class GroupDebtService {
 
 		ArrayList<GroupDebtInfo> resList = null;
 		try {
-			Map<GroupDebtNode, UserNode> queryRes = groupDebtDAO.findGroupDebt(uuid);
+			List<GroupDebtNodeUserNode> queryRes = groupDebtDAO.findGroupDebt(uuid);
 			assert (queryRes != null);
 			resList = new ArrayList<GroupDebtInfo>();
-			for (Map.Entry<GroupDebtNode, UserNode> g : queryRes.entrySet()) {
-				GroupDebt debt = g.getKey().toEntity();
-				User proposer = g.getValue().toEntity();
+			for (GroupDebtNodeUserNode g : queryRes) {
+				GroupDebt debt = g.getDebt().toEntity();
+				User proposer = g.getUser().toEntity();
 				resList.add(new GroupDebtInfo(debt, proposer, username));
 			}
 		} catch (Exception e) {
