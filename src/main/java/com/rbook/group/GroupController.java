@@ -46,6 +46,25 @@ public class GroupController {
 	}
 
 	@ResponseBody
+	@PostMapping("/browseCertainGroup")
+	public IfSuccessResponse browseCertainGroup(@RequestBody GroupRequest req, HttpServletRequest request,
+			HttpServletResponse response) {
+		if (!req.checkValidate()) {
+			return new IfSuccessResponse(-1, "Request invalid", null);
+		}
+		User user = loginService.loginCheck(req.getUsername(), req.getPassword());
+		if (user == null) {
+			return new IfSuccessResponse(5, "Auth Failed", null);
+		}
+		GroupInfo res = groupService.browseCertainGroup(user.getUsername(), req.getUuid());
+		if (res != null) {
+			return new IfSuccessResponse(0, "Success", res);
+
+		} else
+			return new IfSuccessResponse(1, "Error", null);
+	}
+
+	@ResponseBody
 	@PostMapping("/createGroup")
 	public IfSuccessResponse createGroup(@RequestBody CreateGroupRequest req, HttpServletRequest request,
 			HttpServletResponse response) {
@@ -99,6 +118,27 @@ public class GroupController {
 
 		// return a list of user
 		List<User> res = groupService.browseGroupMember(req.getUuid(), user.getUsername());
+		if (res == null) {
+			return new IfSuccessResponse(1, "Failed, not in group or group not exist", null);
+		} else {
+			return new IfSuccessResponse(0, "Success", res);
+		}
+	}
+
+	@ResponseBody
+	@PostMapping("/browseGroupMemberExceptSelf")
+	public IfSuccessResponse browseGroupMemberExceptSelf(@RequestBody GroupRequest req, HttpServletRequest request,
+			HttpServletResponse response) {
+		if (!req.checkValidate()) {
+			return new IfSuccessResponse(-1, "Request invalid", null);
+		}
+		User user = loginService.loginCheck(req.getUsername(), req.getPassword());
+		if (user == null) {
+			return new IfSuccessResponse(5, "Auth Failed", null);
+		}
+
+		// return a list of user
+		List<User> res = groupService.browseGroupMemberExceptSelf(req.getUuid(), user.getUsername());
 		if (res == null) {
 			return new IfSuccessResponse(1, "Failed, not in group or group not exist", null);
 		} else {

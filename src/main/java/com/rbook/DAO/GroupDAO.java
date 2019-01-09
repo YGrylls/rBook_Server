@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.rbook.mapperObject.ConfirmFindDebt;
-import com.rbook.mapperObject.FindGroup;
 import com.rbook.mapperObject.GroupNode;
 import com.rbook.mapperObject.GroupNodeBoolean;
 import com.rbook.mapperObject.GroupNodeInteger;
@@ -22,7 +21,10 @@ public interface GroupDAO extends Neo4jRepository<GroupNode, Long> {
 	public GroupNode createGroup(String uuid, String name, int status, String date);
 
 	@Query("MATCH (g:Group {uuid:{0}})<-[r:IN_GROUP]-(i:User) RETURN g AS group, count(r) AS member")
-	public FindGroup findGroupMem(String uuid);
+	public GroupNodeInteger findGroupMem(String uuid);
+
+	@Query("MATCH (g:Group {uuid:{1}})<-[r:IN_GROUP]-(i:User {username:{0}}) RETURN r.ifConfirmed")
+	public Boolean getPersonalStatus(String username, String uuid);
 
 	@Query("MATCH (g:Group)<-[r:IN_GROUP]-(i:User) WHERE g.uuid IN {0} RETURN g AS group, count(r) AS member")
 	public List<GroupNodeInteger> findMultiGroupMem(String[] uuid);

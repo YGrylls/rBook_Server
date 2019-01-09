@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.rbook.DAO.GroupDAO;
 import com.rbook.entity.Group;
 import com.rbook.entity.User;
-import com.rbook.mapperObject.FindGroup;
 import com.rbook.mapperObject.GroupNodeBoolean;
 import com.rbook.mapperObject.GroupNodeInteger;
 import com.rbook.mapperObject.UserNode;
@@ -37,8 +36,8 @@ public class GroupService {
 		return res;
 	}
 
-	public FindGroup findGroupMem(String guid) {
-		FindGroup group = null;
+	public GroupNodeInteger findGroupMem(String guid) {
+		GroupNodeInteger group = null;
 		try {
 			group = groupDAO.findGroupMem(guid);
 		} catch (Exception e) {
@@ -51,7 +50,7 @@ public class GroupService {
 	@Transactional
 	public GroupInfo addGroup(String username, String guid) {
 		GroupInfo res = null;
-		FindGroup find = findGroupMem(guid);
+		GroupNodeInteger find = findGroupMem(guid);
 		if (find == null)
 			return null;
 		Group group = find.getGroup().toEntity();
@@ -78,7 +77,7 @@ public class GroupService {
 			List<GroupNodeBoolean> memMap = groupDAO.checkAllGroup(username);
 			System.out.println("------memMap----\n" + memMap + "\n------\n");
 			for (GroupNodeBoolean g : memMap) {
-				uuidList.add(g.getGroup().getName());
+				uuidList.add(g.getGroup().getUuid());
 				resList.put(g.getGroup().getName(), new GroupInfo(g.getGroup().toEntity(), -1, g.isConfirm()));
 			}
 			List<GroupNodeInteger> memMapI = groupDAO.findMultiGroupMem(uuidList.toArray(new String[uuidList.size()]));
@@ -89,6 +88,23 @@ public class GroupService {
 				list.add(o);
 			}
 			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+
+	public GroupInfo browseCertainGroup(String username, String guid) {
+		try {
+			GroupNodeInteger queryRes = groupDAO.findGroupMem(guid);
+			if (queryRes == null)
+				return null;
+			Boolean confirm = groupDAO.getPersonalStatus(username, guid);
+			if (confirm == null)
+				return null;
+
+			return new GroupInfo(queryRes.getGroup().toEntity(), queryRes.getMember(), confirm);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -109,6 +125,34 @@ public class GroupService {
 				User user = un.toEntity();
 				if (user.getUsername().equals(username))
 					ifIn = true;
+				resList.add(user);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		if (ifIn)
+			return resList;
+		else
+			return null;
+
+	}
+
+	public List<User> browseGroupMemberExceptSelf(String uuid, String username) {
+		ArrayList<User> resList = null;
+		boolean ifIn = false;
+		try {
+			resList = new ArrayList<User>();
+
+			List<UserNode> queryRes = groupDAO.getGroupMember(uuid);
+			if (queryRes == null)
+				return null;
+			for (UserNode un : queryRes) {
+				User user = un.toEntity();
+				if (user.getUsername().equals(username)) {
+					ifIn = true;
+					continue;
+				}
 				resList.add(user);
 			}
 		} catch (Exception e) {

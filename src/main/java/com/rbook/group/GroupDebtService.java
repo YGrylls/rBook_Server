@@ -1,6 +1,6 @@
 package com.rbook.group;
 
-import java.time.LocalTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +53,7 @@ public class GroupDebtService {
 		if (!canPropose(username, guid, targetList))
 			return null;
 		GroupDebtNode newNode = groupDebtDAO.createGroupDebt(username, guid, UID.generate(), desc, num,
-				LocalTime.now().toString());
+				LocalDate.now().toString());
 		assert (newNode != null);
 		GroupDebt res = newNode.toEntity();
 		int count = groupDebtDAO.linkGroupDebt(newNode.toEntity().getUuid(), targetList);

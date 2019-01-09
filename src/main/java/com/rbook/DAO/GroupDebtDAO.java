@@ -15,7 +15,7 @@ import com.rbook.mapperObject.UserNode;
 @Repository
 public interface GroupDebtDAO extends Neo4jRepository<GroupDebtNode, Long> {
 
-	@Query("MATCH (d:GroupDebt)<-[:HAS_GROUP_DEBT]-(g:Group {uuid:{0}}) RETURN count(r)")
+	@Query("MATCH (d:GroupDebt)<-[:HAS_GROUP_DEBT]-(g:Group {uuid:{0}}) RETURN count(d)")
 	public int getDebtNum(String uuid);
 
 	@Query("MATCH (u:User {username:{0}})-[r:IN_GROUP {ifConfirmed:false}]->(g:Group {uuid:{1},status:0}) RETURN count(r)")
@@ -30,10 +30,10 @@ public interface GroupDebtDAO extends Neo4jRepository<GroupDebtNode, Long> {
 	@Query("MATCH (d:GroupDebt {uuid:{0}}), (u:User) WHERE u.username IN {1} CREATE (d)-[r:OWE_GROUP_DEBT]->(u) RETURN count(r)")
 	public int linkGroupDebt(String uuid, String[] username);
 
-	@Query("MATCH (u:User{username:{0}})-[:PROPOSE_GROUP_DEBT]->(d:GroupDebt)<-[:HAS_GROUP_DEBT]-(g:Group {uuid:{2}}) WHERE d.uuid IN {0} RETURN count(d)")
+	@Query("MATCH (u:User{username:{0}})-[:PROPOSE_GROUP_DEBT]->(d:GroupDebt)<-[:HAS_GROUP_DEBT]-(g:Group {uuid:{2}}) WHERE d.uuid IN {1} RETURN count(d)")
 	public int checkDeleteTarget(String username, String[] targetList, String uuid);
 
-	@Query("MATCH (d:GroupDebt {uuid:{0}}) DETACH DELETE d")
+	@Query("MATCH (d:GroupDebt) WHERE d.uuid IN {0} DETACH DELETE d")
 	public void deleteGroupDebt(String[] targetList);
 
 	@Query("MATCH (u:User)-[:PROPOSE_GROUP_DEBT]->(d:GroupDebt)<-[:HAS_GROUP_DEBT]-(g:Group {uuid:{0}}) RETURN d AS debt, u AS user")

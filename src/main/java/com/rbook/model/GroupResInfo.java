@@ -10,9 +10,11 @@ public class GroupResInfo implements Comparable<GroupResInfo> {
 	private int num;
 	private boolean myStatus;
 	private boolean counterStatus;
+	private String uuid;
 
 	public GroupResInfo(GroupRes res, User counter, String username, boolean ifStart) {
 		this.counter = counter.getUsername();
+		this.uuid = res.getUuid();
 		this.counterNickname = counter.getNickname();
 		if (ifStart) {
 			myStatus = res.isStart();
@@ -65,10 +67,18 @@ public class GroupResInfo implements Comparable<GroupResInfo> {
 		this.counterStatus = counterStatus;
 	}
 
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
+
 	@Override
 	public String toString() {
 		return "GroupResInfo [counter=" + counter + ", counterNickname=" + counterNickname + ", num=" + num
-				+ ", myStatus=" + myStatus + ", counterStatus=" + counterStatus + "]";
+				+ ", myStatus=" + myStatus + ", counterStatus=" + counterStatus + ", uuid=" + uuid + "]";
 	}
 
 	@Override
