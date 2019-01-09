@@ -1,6 +1,5 @@
 package com.rbook.DAO;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.data.neo4j.annotation.Query;
@@ -15,11 +14,15 @@ import com.rbook.mapperObject.UserNode;
 @Repository
 public interface GroupResDAO extends Neo4jRepository<GroupResNode, Long> {
 
-	@Query("MATCH (n:User)-[:PROPOSE_GROUP_DEBT]->(debt:GroupDebt)-[:OWE_GROUP_DEBT]->(m:User) "
-			+ "WHERE debt.uuid IN {0} "
-			+ "CREATE (n)-[:IN_RES]->(res:GroupRes{uuid:debt.uuid+m.username,num:debt.num,start:false,end:false,status:false})-[:OUT_RES]->(m) "
-			+ "RETURN res.uuid")
-	public List<String> createRes(String[] idList);
+	/*
+	 * @Query("MATCH (n:User)-[:PROPOSE_GROUP_DEBT]->(debt:GroupDebt)-[:OWE_GROUP_DEBT]->(m:User) "
+	 * + "WHERE debt.uuid IN {0} " +
+	 * "CREATE (n)-[:IN_RES]->(res:GroupRes{uuid:debt.uuid+m.username,num:debt.num,start:false,end:false,status:false})-[:OUT_RES]->(m) "
+	 * + "RETURN res.uuid") public List<String> createRes(String[] idList);
+	 */
+
+	@Query("MATCH (s:User {username:{0}}),(e:User{username:{1}}) CREATE (s)-[:IN_RES]->(res:GroupRes{uuid:{2},num:{3},start:false,end:false,status:false})-[:OUT_RES]->(e)")
+	public GroupResNode createRes(String start, String end, String uuid, int num);
 
 	@Query("OPTIONAL MATCH (r:GroupRes), (g:Group {uuid:{1}}) WHERE r.uuid IN {0} CREATE (g)-[l:HAS_RES]->(r) RETURN count(l)")
 	public int linkResToGroup(String[] idList, String guid);
