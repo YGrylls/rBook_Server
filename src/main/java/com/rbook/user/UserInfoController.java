@@ -26,7 +26,7 @@ public class UserInfoController {
 	private UserInfoService userInfoService;
 
 	@ResponseBody
-	@PostMapping("/browserUserInfo")
+	@PostMapping("/browseUserInfo")
 	public IfSuccessResponse browseUserInfo(@RequestBody BrowseRequest req, HttpServletRequest request,
 			HttpServletResponse response) {
 		if (!req.checkValidate()) {
