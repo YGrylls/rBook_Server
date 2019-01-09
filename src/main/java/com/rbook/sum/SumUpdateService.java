@@ -34,6 +34,7 @@ public class SumUpdateService {
 
 	public void updateRankStatus(String username) {
 		List<One2OneDebtRel> debtList = debtDAO.findAllDebts(username);
+
 	}
 
 	public void updateLoopCheck(String username) {

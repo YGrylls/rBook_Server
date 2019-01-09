@@ -93,7 +93,7 @@ public class GroupConfirmService {
 			idList.add(uuid);
 		}
 
-		int linkRes = groupResDAO.linkResToGroup((String[]) idList.toArray(), group.getUuid());
+		int linkRes = groupResDAO.linkResToGroup(idList.toArray(new String[idList.size()]), group.getUuid());
 		assert (linkRes == idList.size());
 
 		return true;

@@ -14,7 +14,8 @@ import com.rbook.DAO.GroupDAO;
 import com.rbook.entity.Group;
 import com.rbook.entity.User;
 import com.rbook.mapperObject.FindGroup;
-import com.rbook.mapperObject.GroupNode;
+import com.rbook.mapperObject.GroupNodeBoolean;
+import com.rbook.mapperObject.GroupNodeInteger;
 import com.rbook.mapperObject.UserNode;
 import com.rbook.model.GroupInfo;
 import com.rbook.util.UID;
@@ -70,14 +71,15 @@ public class GroupService {
 		try {
 			ArrayList<String> uuidList = new ArrayList<String>();
 			Map<String, GroupInfo> resList = new HashMap<String, GroupInfo>();
-			Map<GroupNode, Boolean> memMap = groupDAO.checkAllGroup(username);
-			for (Map.Entry<GroupNode, Boolean> g : memMap.entrySet()) {
-				uuidList.add(g.getKey().getName());
-				resList.put(g.getKey().getName(), new GroupInfo(g.getKey().toEntity(), -1, g.getValue()));
+			List<GroupNodeBoolean> memMap = groupDAO.checkAllGroup(username);
+			System.out.println("------memMap----\n" + memMap + "\n------\n");
+			for (GroupNodeBoolean g : memMap) {
+				uuidList.add(g.getGroup().getName());
+				resList.put(g.getGroup().getName(), new GroupInfo(g.getGroup().toEntity(), -1, g.isConfirm()));
 			}
-			Map<GroupNode, Integer> memMapI = groupDAO.findMultiGroupMem((String[]) uuidList.toArray());
-			for (Map.Entry<GroupNode, Integer> g : memMapI.entrySet()) {
-				resList.get(g.getKey().getName()).setMember(g.getValue());
+			List<GroupNodeInteger> memMapI = groupDAO.findMultiGroupMem(uuidList.toArray(new String[uuidList.size()]));
+			for (GroupNodeInteger g : memMapI) {
+				resList.get(g.getGroup().getName()).setMember(g.getMember());
 			}
 			for (GroupInfo o : resList.values()) {
 				list.add(o);

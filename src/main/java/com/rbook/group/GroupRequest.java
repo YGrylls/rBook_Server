@@ -48,7 +48,7 @@ public class GroupRequest implements IUserReq {
 			if (uh != null) {
 				uhValidate = (getUsername().length() <= 16 && getPassword().length() <= 16);
 			}
-			contentValidate = uuid != null && uuid.length() >= 32;
+			contentValidate = uuid != null && uuid.length() >= 1;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
