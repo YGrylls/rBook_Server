@@ -44,6 +44,9 @@ public interface GroupDAO extends Neo4jRepository<GroupNode, Long> {
 	@Query("MATCH (g:Group {uuid :{0}})-[:HAS_GROUP_DEBT]->(d:GroupDebt) SET g.status=1,g.confirmTime={1} WITH d AS debt MATCH (i:User)-[:PROPOSE_GROUP_DEBT]->(debt)-[:OWE_GROUP_DEBT]->(o:User) RETURN i.username AS start, debt AS groupDebt, o.username AS end ")
 	public List<ConfirmFindDebt> confirmGroup(String uuid, String date);
 
+	@Query("MATCH (g:Group {uuid:{0}}) SET g.status=2, g.confirmTime={1}")
+	public int confirmEmptyGroup(String uuid, String date);
+
 	@Query("MATCH (g:Group {uuid:{0}})<-[:IN_GROUP]-(u :User) RETURN u")
 	public List<UserNode> getGroupMember(String uuid);
 }

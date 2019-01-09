@@ -54,6 +54,11 @@ public class GroupConfirmService {
 		}
 		List<ConfirmFindDebt> debtList = groupDAO.confirmGroup(group.getUuid(), time.toString());// time consistent
 		assert (debtList != null);
+		if (debtList.size() == 0) {
+			int count = groupDAO.confirmEmptyGroup(group.getUuid(), time.toString());
+			assert (count == 1);
+			return true;
+		}
 		ArrayList<String> idList = new ArrayList<String>();
 		HashMap<GroupDebtPair, Integer> resMap = new HashMap<GroupDebtPair, Integer>();
 		for (ConfirmFindDebt n : debtList) {
