@@ -1,33 +1,42 @@
-package com.rbook.one2one;
+package com.rbook.common;
 
-// for start a new pair
-import com.rbook.common.IUserReq;
-import com.rbook.common.UserHeader;
+import java.util.Arrays;
 
-public class ConstructRequest implements IUserReq { // construct a new pair
+// for combine and delete request
+public class One2OneSelectRequest implements IUserReq { // for delete and combine operation use
 	private UserHeader uh;
-	private String counterName;
+	private String counter;
+	private String[] idList;
 	private String desc;
 
-	public String getCounterName() {
-		return counterName;
+	public String getCounter() {
+		return counter;
 	}
 
-	public void setCounterName(String counterName) {
-		this.counterName = counterName;
+	public void setIdList(String[] idList) {
+		this.idList = idList;
 	}
 
-	public String getDesc() {
-		return desc;
+	public String[] getIdList() {
+		return idList;
+	}
+
+	public void setCounter(String counter) {
+		this.counter = counter;
 	}
 
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
 
+	public String getDesc() {
+		return desc;
+	}
+
 	@Override
 	public String toString() {
-		return "ConstructRequest [counterName=" + counterName + ", desc=" + desc + "]";
+		return "One2OneSelectRequest [uh=" + uh + ", counter=" + counter + ", idList=" + Arrays.toString(idList)
+				+ ", desc=" + desc + "]";
 	}
 
 	public String getUsername() {
@@ -46,16 +55,17 @@ public class ConstructRequest implements IUserReq { // construct a new pair
 		this.uh = uh;
 	}
 
-	@Override
 	public boolean checkValidate() {
 		boolean uhValidate = false;
 		boolean contentValidate = false;
+
 		try {
 			System.out.println("-------------------req-----------\n" + this + "\n");
 			if (uh != null) {
 				uhValidate = (getUsername().length() <= 16 && getPassword().length() <= 16);
 			}
-			contentValidate = counterName.length() <= 16 && desc.length() <= 140;
+			contentValidate = (counter.length() <= 16 && idList != null) && idList.length <= 100
+					&& desc.length() <= 140;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;

@@ -1,4 +1,4 @@
-package com.rbook.user;
+package com.rbook.common;
 
 public class LoginRequest {
 	private String username;

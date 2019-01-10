@@ -1,35 +1,17 @@
-package com.rbook.one2one;
+package com.rbook.common;
 
-import com.rbook.common.IUserReq;
-import com.rbook.common.UserHeader;
+public class CreateGroupRequest implements IUserReq {
 
-// for check detail debts to certain counter
-public class CounterRequest implements IUserReq {
 	private UserHeader uh;
-	private String counter;
-
-	@Override
-	public String toString() {
-		return "BrowseRequest [uh=" + uh + ", counter=" + counter + "]";
-	}
-
-	public String getCounter() {
-		return counter;
-	}
-
-	public void setCounter(String counter) {
-		this.counter = counter;
-	}
+	private String groupName;
 
 	@Override
 	public String getUsername() {
-
 		return uh.getUsername();
 	}
 
 	@Override
 	public String getPassword() {
-
 		return uh.getPassword();
 	}
 
@@ -41,6 +23,20 @@ public class CounterRequest implements IUserReq {
 		this.uh = uh;
 	}
 
+	public String getGroupName() {
+		return groupName;
+	}
+
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
+	}
+
+	@Override
+	public String toString() {
+		return "CreateGroupRequest [uh=" + uh + ", groupName=" + groupName + "]";
+	}
+
+	@Override
 	public boolean checkValidate() {
 		boolean uhValidate = false;
 		boolean contentValidate = false;
@@ -49,7 +45,7 @@ public class CounterRequest implements IUserReq {
 			if (uh != null) {
 				uhValidate = (getUsername().length() <= 16 && getPassword().length() <= 16);
 			}
-			contentValidate = counter.length() <= 16;
+			contentValidate = groupName.length() <= 40;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;

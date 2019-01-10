@@ -1,9 +1,6 @@
-package com.rbook.group;
+package com.rbook.common;
 
 import java.util.Arrays;
-
-import com.rbook.common.IUserReq;
-import com.rbook.common.UserHeader;
 
 public class ProposeGroupDebtRequest implements IUserReq {
 

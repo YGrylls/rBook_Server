@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rbook.common.IfSuccessResponse;
+import com.rbook.common.LoginRequest;
 import com.rbook.entity.User;
 
 @RestController

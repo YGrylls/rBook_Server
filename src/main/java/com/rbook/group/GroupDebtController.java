@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.rbook.common.DeleteGroupDebtRequest;
+import com.rbook.common.GroupRequest;
 import com.rbook.common.IfSuccessResponse;
+import com.rbook.common.ProposeGroupDebtRequest;
 import com.rbook.entity.GroupDebt;
 import com.rbook.entity.User;
 import com.rbook.model.GroupDebtInfo;

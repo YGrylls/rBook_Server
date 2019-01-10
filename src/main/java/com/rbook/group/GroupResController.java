@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.rbook.common.AcceptGroupResRequest;
+import com.rbook.common.GroupRequest;
 import com.rbook.common.IfSuccessResponse;
 import com.rbook.entity.GroupRes;
 import com.rbook.entity.User;

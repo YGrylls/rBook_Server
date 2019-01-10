@@ -1,12 +1,12 @@
-package com.rbook.group;
+package com.rbook.common;
 
-import com.rbook.common.IUserReq;
-import com.rbook.common.UserHeader;
+import java.util.Arrays;
 
-public class CreateGroupRequest implements IUserReq {
+public class DeleteGroupDebtRequest implements IUserReq {
 
 	private UserHeader uh;
-	private String groupName;
+	private String[] list;
+	private String uuid;
 
 	@Override
 	public String getUsername() {
@@ -18,6 +18,11 @@ public class CreateGroupRequest implements IUserReq {
 		return uh.getPassword();
 	}
 
+	@Override
+	public String toString() {
+		return "DeleteGroupDebtRequest [uh=" + uh + ", list=" + Arrays.toString(list) + ", uuid=" + uuid + "]";
+	}
+
 	public UserHeader getUh() {
 		return uh;
 	}
@@ -26,17 +31,20 @@ public class CreateGroupRequest implements IUserReq {
 		this.uh = uh;
 	}
 
-	public String getGroupName() {
-		return groupName;
+	public String[] getList() {
+		return list;
 	}
 
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
+	public void setList(String[] list) {
+		this.list = list;
 	}
 
-	@Override
-	public String toString() {
-		return "CreateGroupRequest [uh=" + uh + ", groupName=" + groupName + "]";
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
 	}
 
 	@Override
@@ -48,7 +56,7 @@ public class CreateGroupRequest implements IUserReq {
 			if (uh != null) {
 				uhValidate = (getUsername().length() <= 16 && getPassword().length() <= 16);
 			}
-			contentValidate = groupName.length() <= 40;
+			contentValidate = list.length > 0 && uuid != null;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;

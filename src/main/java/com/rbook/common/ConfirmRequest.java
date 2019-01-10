@@ -1,7 +1,4 @@
-package com.rbook.one2one;
-
-import com.rbook.common.IUserReq;
-import com.rbook.common.UserHeader;
+package com.rbook.common;
 
 public class ConfirmRequest implements IUserReq {
 	private UserHeader uh;

@@ -1,7 +1,4 @@
-package com.rbook.one2one;
-
-import com.rbook.common.IUserReq;
-import com.rbook.common.UserHeader;
+package com.rbook.common;
 
 //for add a new debt in a pair
 public class One2OneDebtRequest implements IUserReq { // add new pair debt
