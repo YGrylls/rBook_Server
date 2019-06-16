@@ -39,7 +39,7 @@ public class ConstructController {
 		if (debt == null) {
 			return new IfSuccessResponse(1, "User not exists or you two already paired", null);
 		} else {
-			System.out.println("------------ConstructPair---------\n" + debt);
+			// System.out.println("------------ConstructPair---------\n" + debt);
 			return new IfSuccessResponse(0, "Success", debt);
 		}
 

@@ -12,7 +12,9 @@ public class ScheduledUpdate {
 
 	@Scheduled(cron = "0 0 0 * * ?")
 	public void update() {// executed 0:00AM everyday
+		System.out.println("-----scheduled----");
 		sumService.update();
+		System.out.println("-----scheduled end-----");
 	}
 
 }

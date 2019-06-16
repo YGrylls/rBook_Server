@@ -16,7 +16,8 @@ public interface One2OneDebtDAO extends Neo4jRepository<One2OneDebtRel, Long> {
 	@Query("MATCH (n:User {username:{0}})-[r:ONE2ONE_DEBT]-(m :User {username:{1}}) RETURN (n)-[r]-(m)")
 	public List<One2OneDebtRel> findDebts(String username, String counterUsername);
 
-	@Query("MATCH (n:User {username:{0}}),(m:User {username:{1}}) CREATE (n)-[r:ONE2ONE_DEBT {number:{2}, desc:{3}, date:{4}, status:{5}, proposal:{6}, uuid:{7}}]->(m) RETURN (n)-[r]->(m)")
+	@Query("MATCH (n:User {username:{0}}),(m:User {username:{1}}) "
+			+ "CREATE (n)-[r:ONE2ONE_DEBT {number:{2}, desc:{3}, date:{4}, status:{5}, proposal:{6}, uuid:{7}}]->(m) RETURN (n)-[r]->(m)")
 	public One2OneDebtRel createDebt(String startname, String endname, int num, String desc, String date, int status,
 			boolean proposal, String uuid);
 

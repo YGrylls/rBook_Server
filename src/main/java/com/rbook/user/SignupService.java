@@ -22,7 +22,7 @@ public class SignupService {
 	@Transactional
 	public Boolean createNewUser(String username, String password, String identity, String nickname) {
 		String encodedPW = Encoder.encryptBasedDes(password);
-		userdao.addUser(username, encodedPW, identity, 0, 5, nickname);
+		userdao.addUser(username, encodedPW, identity, 0, 50, nickname);
 
 		return true;
 

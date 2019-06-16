@@ -38,7 +38,13 @@ public interface UserDAO extends Neo4jRepository<UserNode, Long> {
 	@Query("MATCH path=(u:User{username:{0}})-[:ONE2ONE_DEBT]-(s:User)-[:ONE2ONE_DEBT*1..3 {status:0}]-(e:User)-[:ONE2ONE_DEBT]-(m:User{username:{0}}) WHERE SIZE(apoc.coll.toSet(NODES(path))) = LENGTH(path) WITH DISTINCT s.username AS startu, e.username AS endu, LENGTH(path) AS scales MATCH (t:User{username:{0}}) CREATE (t)-[:IN_LOOP]->(l:LoopCheck {start:startu,end:endu,scale:scales})")
 	public void addNewLoop(String username);
 
+	@Query("MATCH (l:LoopCheck) WHERE l.start>l.end DETACH DELETE l")
+	public void deleteDuplicateLoop();
+
 	@Query("MATCH (u:User{username:{0}})-[:IN_LOOP]->(l:LoopCheck) RETURN l")
 	public List<LoopCheckNode> getLoopCheck(String username);
+
+	@Query("MATCH (u:User {username:{0}}) SET u.rankStatus={1}")
+	public void setRank(String username, long rank);
 
 }
